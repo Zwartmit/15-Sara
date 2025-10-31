@@ -21,18 +21,23 @@
 [build.processing.images]
   compress = true
 
-# No redirigir los assets (deben servirse normalmente)
+# Redirigir la raíz y páginas HTML a proximamente.html
 [[redirects]]
-  from = "/assets/*"
-  to = "/assets/:splat"
-  status = 200
-
-# Redirigir todas las demás rutas a proximamente.html
-[[redirects]]
-  from = "/*"
+  from = "/"
   to = "/proximamente.html"
   status = 200
-  force = false
+
+[[redirects]]
+  from = "/index.html"
+  to = "/proximamente.html"
+  status = 200
+
+[[redirects]]
+  from = "/pages/*"
+  to = "/proximamente.html"
+  status = 200
+
+# Los assets se sirven normalmente (sin redirect)
 
 # Nota: Para activar el sitio completo cuando esté listo:
 # 1. Elimina este archivo netlify.toml
