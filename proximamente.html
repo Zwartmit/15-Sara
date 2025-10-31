@@ -238,6 +238,49 @@
       }
     }
   </style>
+  
+  <script>
+    // Log para verificar carga de imágenes
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log('🔍 Verificando carga de recursos...');
+      
+      // Verificar favicon
+      const favicon = document.querySelector('link[rel="icon"]');
+      console.log('📍 Favicon href:', favicon?.href);
+      
+      // Verificar si las imágenes de linterna cargan
+      const testImg = new Image();
+      testImg.onload = () => {
+        console.log('✅ Linterna cargada correctamente');
+      };
+      testImg.onerror = () => {
+        console.error('❌ Error al cargar linterna desde:', testImg.src);
+        console.log('🔧 Ruta intentada:', './assets/linterna.png');
+        console.log('🌐 URL completa:', window.location.origin + '/assets/linterna.png');
+      };
+      testImg.src = './assets/linterna.png';
+      
+      // Verificar rapunzel
+      const testRapunzel = new Image();
+      testRapunzel.onload = () => {
+        console.log('✅ Rapunzel cargada correctamente');
+      };
+      testRapunzel.onerror = () => {
+        console.error('❌ Error al cargar rapunzel desde:', testRapunzel.src);
+      };
+      testRapunzel.src = './assets/rapunzel.png';
+      
+      // Log de todas las linternas
+      const linternas = document.querySelectorAll('.lantern');
+      console.log('🏮 Número de linternas en DOM:', linternas.length);
+      
+      // Verificar estilos computados
+      if (linternas.length > 0) {
+        const styles = window.getComputedStyle(linternas[0]);
+        console.log('🎨 Background-image de linterna:', styles.backgroundImage);
+      }
+    });
+  </script>
 </head>
 <body>
   <!-- Linternas flotantes -->
