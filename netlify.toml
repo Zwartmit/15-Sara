@@ -3,13 +3,31 @@
 
 [build]
   publish = "."
+  
+[build.processing]
+  skip_processing = false
 
-# Redirigir todas las rutas a proximamente.html
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
+# Redirigir todas las rutas a proximamente.html (excepto assets)
 [[redirects]]
   from = "/*"
   to = "/proximamente.html"
   status = 200
   force = true
+  conditions = {path = ["!assets/*"]}
 
 # Nota: Para activar el sitio completo cuando esté listo:
 # 1. Elimina este archivo netlify.toml
