@@ -37,8 +37,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      overflow: auto;
       position: relative;
+      padding: 20px 0;
     }
 
     /* Decoración de fondo - Flores flotantes */
@@ -59,44 +60,37 @@
     /* Linternas flotantes */
     .lantern {
       position: absolute;
-      width: 40px;
-      height: 60px;
-      background: linear-gradient(135deg, var(--gold), var(--accent));
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      box-shadow: 0 0 30px rgba(241, 196, 15, 0.6);
+      width: 60px;
+      height: 80px;
+      background-image: url('assets/linterna.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: drop-shadow(0 0 15px rgba(241, 196, 15, 0.5));
       animation: float-lantern 8s ease-in-out infinite;
-      opacity: 0.7;
+      opacity: 0.9;
       z-index: 20;
     }
 
-    .lantern::after {
-      content: '✨';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1.2rem;
-    }
-
-    .lantern:nth-child(1) {
+    .lantern-1 {
       top: 10%;
       left: 10%;
       animation-delay: 0s;
     }
 
-    .lantern:nth-child(2) {
+    .lantern-2 {
       top: 20%;
       right: 15%;
       animation-delay: 2s;
     }
 
-    .lantern:nth-child(3) {
+    .lantern-3 {
       bottom: 15%;
       left: 20%;
       animation-delay: 4s;
     }
 
-    .lantern:nth-child(4) {
+    .lantern-4 {
       bottom: 25%;
       right: 10%;
       animation-delay: 6s;
@@ -230,20 +224,26 @@
       }
 
       .lantern {
-        width: 30px;
-        height: 45px;
+        width: 45px;
+        height: 60px;
         z-index: 20;
-        opacity: 0.6;
+        opacity: 0.8;
+      }
+      
+      /* Ajustar posición de la tercera linterna en móviles */
+      .lantern-3 {
+        bottom: 5%;
+        left: 15%;
       }
     }
   </style>
 </head>
 <body>
   <!-- Linternas flotantes -->
-  <div class="lantern"></div>
-  <div class="lantern"></div>
-  <div class="lantern"></div>
-  <div class="lantern"></div>
+  <div class="lantern lantern-1"></div>
+  <div class="lantern lantern-2"></div>
+  <div class="lantern lantern-3"></div>
+  <div class="lantern lantern-4"></div>
 
   <!-- Contenedor principal -->
   <div class="coming-soon-container">
@@ -258,7 +258,9 @@
     </p>
     
     <div class="event-date">
-      🗓 13 de Diciembre, 2025
+      📍 Salón de eventos La Ceibita
+      <br>
+      ✨ 13 de Diciembre, 2025
       <br>
       🕐 4:00 PM
     </div>
