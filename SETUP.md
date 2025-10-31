@@ -23,7 +23,6 @@
 └── assets/
     ├── carriage.svg      # Ícono de carruaje
     ├── castle.svg        # Ícono de castillo
-    └── crown.svg         # Ícono de corona
 ```
 
 ## 🚀 Inicio Rápido
@@ -147,6 +146,7 @@ npx http-server -p 8000
 5. Tu sitio estará en: `https://tuusuario.github.io/nombre-repo`
 
 ⚠️ **IMPORTANTE**: Después de publicar, agrega la URL en Google Cloud Console:
+
 - Ve a "Credenciales" > Tu OAuth Client ID
 - Agrega `https://tuusuario.github.io` a "Orígenes autorizados"
 
@@ -244,6 +244,7 @@ O edita directamente `css/styles.css`:
 ## 📞 Soporte
 
 Si tienes problemas, revisa:
+
 1. La consola del navegador (F12 > Console)
 2. Que todos los archivos estén en su lugar
 3. Que el servidor local esté corriendo

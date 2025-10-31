@@ -4,28 +4,33 @@
 [build]
   publish = "."
 
-# Permitir que las imágenes se carguen normalmente (no redirigir)
+# Excluir archivos estáticos de la redirección
 [[redirects]]
-  from = "/*.png"
+  from = "/linterna.png"
+  to = "/linterna.png"
+  status = 200
+
+[[redirects]]
+  from = "/rapunzel.png"
+  to = "/rapunzel.png"
+  status = 200
+
+[[redirects]]
+  from = "/*.css"
   to = "/:splat"
   status = 200
 
 [[redirects]]
-  from = "/*.jpg"
+  from = "/*.js"
   to = "/:splat"
   status = 200
 
-[[redirects]]
-  from = "/*.svg"
-  to = "/:splat"
-  status = 200
-
-# Redirigir todas las demás rutas a proximamente.html
+# Redirigir todas las demás rutas a proximamente.html (excepto archivos estáticos)
 [[redirects]]
   from = "/*"
   to = "/proximamente.html"
   status = 200
-  force = true
+  force = false
 
 # Nota: Para activar el sitio completo cuando esté listo:
 # 1. Elimina este archivo netlify.toml
