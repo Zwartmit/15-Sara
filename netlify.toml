@@ -4,7 +4,23 @@
 [build]
   publish = "."
 
-# Redirigir todas las rutas a proximamente.html
+# Permitir que las imágenes se carguen normalmente (no redirigir)
+[[redirects]]
+  from = "/*.png"
+  to = "/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*.jpg"
+  to = "/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*.svg"
+  to = "/:splat"
+  status = 200
+
+# Redirigir todas las demás rutas a proximamente.html
 [[redirects]]
   from = "/*"
   to = "/proximamente.html"
