@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa - Cómo Llegar | 15 Años de Sara</title>
+  <link rel="icon" href="../crown.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/styles.css">
+  
+  <!-- Google Maps API -->
+  <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdO-5ZVOSsWWuwt3Xjco_KqX7PHR1ZmRk&libraries=places"></script>
+  
+  <!-- Config -->
+  <script src="../config.js"></script>
+  
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-brand">👑 Sara's 15</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+        <li><a href="galeria.html">Galería</a></li>
+        <li><a href="mensajes.html">Mensajes</a></li>
+        <li><a href="itinerario.html">Itinerario</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido Principal -->
+  <section class="container" style="padding-top: 100px;">
+    <div class="fade-in text-center mb-8">
+      <h1 class="text-5xl md:text-6xl font-bold mb-4" style="color: var(--gold);">
+        🗺️ Cómo Llegar al Castillo
+      </h1>
+      <p class="text-xl opacity-90">
+        Tu carruaje te está esperando. ¡Encuentra la ruta más rápida!
+      </p>
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="text-center mb-8">
+      <button id="start-route-btn" class="btn-primary mr-4">
+        📍 Obtener Mi Ubicación
+      </button>
+      <button onclick="openInMaps('google')" class="btn-secondary mr-4">
+        🗺️ Abrir en Google Maps
+      </button>
+      <button onclick="openInMaps('waze')" class="btn-secondary">
+        🚗 Abrir en Waze
+      </button>
+    </div>
+
+    <!-- Información de la Ruta -->
+    <div id="route-info"></div>
+
+    <!-- Mapa -->
+    <div id="map" class="fade-in"></div>
+
+    <!-- Información del Lugar -->
+    <div class="glass mt-8 p-8">
+      <h2 class="text-3xl font-bold mb-6" style="color: var(--gold);">📍 Detalles del Lugar</h2>
+      <div class="grid grid-2">
+        <div>
+          <p class="text-lg mb-3"><strong>🏰 Lugar:</strong> <script>document.write(CONFIG.evento.lugar)</script></p>
+          <p class="text-lg mb-3"><strong>📍 Dirección:</strong> <script>document.write(CONFIG.evento.direccion)</script></p>
+        </div>
+        <div>
+          <p class="text-lg mb-3"><strong>📅 Fecha:</strong> <script>document.write(new Date(CONFIG.evento.fecha).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }))</script></p>
+          <p class="text-lg mb-3"><strong>🕐 Hora:</strong> <script>document.write(CONFIG.evento.hora)</script></p>
+        </div>
+      </div>
+      
+      <div class="mt-6 p-4 rounded-lg" style="background: rgba(255,255,255,0.1);">
+        <p class="text-sm opacity-90">
+          💡 <strong>Consejo:</strong> Te recomendamos llegar con 15-20 minutos de anticipación para encontrar estacionamiento y disfrutar de la recepción.
+        </p>
+      </div>
+    </div>
+
+    <!-- Instrucciones -->
+    <div class="glass mt-8 p-8">
+      <h3 class="text-2xl font-bold mb-4" style="color: var(--gold);">🧭 Instrucciones</h3>
+      <ol style="list-style: decimal; margin-left: 20px; line-height: 2;">
+        <li>Haz clic en "Obtener Mi Ubicación" para ver la ruta desde donde estás</li>
+        <li>El mapa mostrará la ruta más rápida en tu carruaje 🎠</li>
+        <li>Puedes abrir la navegación en Google Maps o Waze para seguir las indicaciones paso a paso</li>
+        <li>El marcador del castillo 🏰 indica el destino exacto</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 40px 20px; margin-top: 60px; opacity: 0.8;">
+    <p>Hecho con 💖 para celebrar los 15 años de Sara</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/app.js"></script>
+  <script src="../js/maps.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "sara-15-anos",
+  "version": "1.0.0",
+  "description": "Plataforma web para los 15 años de Sara",
+  "main": "index.html",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "start": "python -m http.server 8000"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}

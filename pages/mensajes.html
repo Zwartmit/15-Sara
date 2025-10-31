@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mensajes - Felicita a Sara | 15 Años de Sara</title>
+  <link rel="icon" href="../crown.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Indie+Flower&display=swap" rel="stylesheet">
+  
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/styles.css">
+  
+  <!-- Config -->
+  <script src="../config.js"></script>
+  
+  <style>
+    /* Layout de dos columnas */
+    .messages-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      width: 100%;
+    }
+
+    /* Desktop: dos columnas lado a lado */
+    @media (min-width: 1024px) {
+      .messages-layout {
+        grid-template-columns: 450px 1fr;
+        gap: 30px;
+      }
+    }
+
+    .messages-column {
+      width: 100%;
+    }
+
+    /* Canvas 3D */
+    #canvas-container {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(20, 20, 40, 0.9), rgba(40, 20, 60, 0.9));
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* En desktop, hacer el canvas más alto */
+    @media (min-width: 1024px) {
+      #canvas-container {
+        height: 700px;
+      }
+    }
+    
+    #messages-canvas {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+    }
+    
+    #messages-canvas:active {
+      cursor: grabbing;
+    }
+    
+    /* Post-it Cards (fallback 2D) */
+    .postit-board {
+      position: relative;
+      width: 100%;
+      min-height: 600px;
+      padding: 20px;
+      perspective: 1000px;
+      background: linear-gradient(135deg, rgba(20, 20, 40, 0.3), rgba(40, 20, 60, 0.3));
+      border-radius: 15px;
+    }
+    
+    .message-card {
+      background: linear-gradient(135deg, #ffd54f 0%, #ffecb3 100%);
+      border-radius: 5px;
+      padding: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: absolute;
+      min-height: 180px;
+      width: 250px;
+      cursor: move;
+      color: #333;
+      user-select: none;
+      z-index: 1;
+    }
+    
+    .message-card.dragging {
+      cursor: grabbing;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transform: scale(1.05);
+    }
+    
+    .message-card:nth-child(2n) {
+      background: linear-gradient(135deg, #ff8a80 0%, #ffccbc 100%);
+    }
+    
+    .message-card:nth-child(3n) {
+      background: linear-gradient(135deg, #80deea 0%, #b2ebf2 100%);
+    }
+    
+    .message-card:nth-child(4n) {
+      background: linear-gradient(135deg, #ce93d8 0%, #e1bee7 100%);
+    }
+    
+    .message-card:nth-child(5n) {
+      background: linear-gradient(135deg, #a5d6a7 0%, #c8e6c9 100%);
+    }
+    
+    .message-card:hover {
+      transform: translateY(-10px) rotateZ(2deg);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      z-index: 10;
+    }
+    
+    .message-card::before {
+      content: '📌';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+    
+    .message-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      gap: 10px;
+    }
+    
+    .message-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .message-author {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #333;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    }
+    
+    .message-date {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      color: #555;
+    }
+    
+    .message-content {
+      line-height: 1.5;
+      color: #333;
+      font-size: 0.85rem;
+      font-family: 'Indie Flower', cursive;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .form-input:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    
+    .char-counter {
+      text-align: right;
+      font-size: 0.85rem;
+      opacity: 0.7;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-brand">👑 Sara's 15</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Inicio</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+        <li><a href="galeria.html">Galería</a></li>
+        <li><a href="mensajes.html">Mensajes</a></li>
+        <li><a href="itinerario.html">Itinerario</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido Principal -->
+  <section class="container" style="padding-top: 85px;">
+    <div class="fade-in text-center mb-6">
+      <h1 class="text-4xl md:text-5xl font-bold mb-3" style="color: var(--gold);">
+        💌 Mensajes para Sara
+      </h1>
+      <p class="text-lg opacity-90">
+        Deja tus mejores deseos y felicitaciones. ¡Hagamos este día inolvidable!
+      </p>
+    </div>
+
+    <!-- Layout de dos columnas en desktop -->
+    <div class="messages-layout">
+      <!-- Columna izquierda: Formulario -->
+      <div class="messages-column">
+        <!-- Formulario de Mensaje -->
+        <div class="glass p-6">
+      <h2 class="text-2xl font-bold mb-5" style="color: var(--gold);">✍️ Escribe tu Mensaje</h2>
+      
+      <form id="message-form" onsubmit="submitMessage(event)">
+        <div class="form-group">
+          <label class="form-label">Tu Nombre *</label>
+          <input 
+            type="text" 
+            id="author-name" 
+            class="form-input" 
+            placeholder="Ej: Mariana Sánchez"
+            required
+            maxlength="50"
+          >
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Tu Mensaje para Sara *</label>
+          <textarea 
+            id="message-content" 
+            class="form-textarea" 
+            placeholder="Escribe aquí tus mejores deseos para Sara en este día tan especial..."
+            required
+            maxlength="500"
+            oninput="updateCharCounter()"
+          ></textarea>
+          <div class="char-counter">
+            <span id="char-count">0</span> / 500 caracteres
+          </div>
+        </div>
+        
+        <div class="text-center">
+          <button type="submit" class="btn-primary">
+            💌 Enviar Mensaje
+          </button>
+        </div>
+      </form>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Tablero 3D -->
+      <div class="messages-column">
+        <!-- Muro de Mensajes 3D -->
+        <div class="glass p-6">
+      <h2 class="text-2xl font-bold mb-4 text-center" style="color: var(--gold);">💬 Tablero de Felicitaciones</h2>
+      <p class="text-center mb-3 opacity-90 text-sm">🖱️ Arrastra para mover el tablero • 🔍 Scroll para ajustar el zoom</p>
+      
+          <!-- Canvas 3D -->
+          <div id="canvas-container">
+            <canvas id="messages-canvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 40px 20px; margin-top: 20px; opacity: 0.8;">
+    <p>Hecho con 💖 para celebrar los 15 años de Sara</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/app.js"></script>
+  <script src="../js/mensajes.js"></script>
+  <script src="../js/mensajes-3d.js"></script>
+  <script>
+    // Inicializar todo en el orden correcto
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log('🚀 Iniciando carga de mensajes...');
+      
+      // 1. Cargar mensajes primero
+      await initMessages();
+      console.log('✅ Mensajes cargados:', messages.length);
+      
+      // 2. Inicializar escena 3D
+      try {
+        init3DScene();
+        console.log('✅ Escena 3D inicializada');
+      } catch (error) {
+        console.error('❌ Error inicializando escena 3D:', error);
+      }
+      
+      // 3. Esperar un poco más para asegurar que todo esté listo
+      setTimeout(() => {
+        console.log('🎨 Intentando mostrar mensajes...');
+        if (typeof displayMessages === 'function') {
+          displayMessages();
+          console.log('✅ Mensajes mostrados en el tablero');
+        }
+      }, 500);
+      
+      // 4. Iniciar auto-refresh
+      startMessagesSystem();
+      console.log('🔄 Sistema de auto-refresh iniciado');
+    });
+  </script>
+</body>
+</html>

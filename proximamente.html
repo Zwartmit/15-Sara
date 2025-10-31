@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Próximamente - 15 Años Sara Valeria 🏰</title>
+  <link rel="icon" href="crown.svg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Variables de color - Tema Rapunzel */
+    :root {
+      --primary: #9B59B6;
+      --secondary: #8E44AD;
+      --accent: #F39C12;
+      --gold: #F1C40F;
+      --purple-dark: #6C3483;
+      --purple-light: #D7BDE2;
+      --text: #2C1A3A;
+      --text-light: #5D4E6D;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #F8F3FF 0%, #FFF8E7 50%, #FFE5B4 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Decoración de fondo - Flores flotantes */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(200, 155, 219, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(232, 212, 162, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Linternas flotantes */
+    .lantern {
+      position: absolute;
+      width: 40px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--gold), var(--accent));
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      box-shadow: 0 0 30px rgba(241, 196, 15, 0.6);
+      animation: float-lantern 8s ease-in-out infinite;
+      opacity: 0.7;
+      z-index: 20;
+    }
+
+    .lantern::after {
+      content: '✨';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.2rem;
+    }
+
+    .lantern:nth-child(1) {
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .lantern:nth-child(2) {
+      top: 20%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+
+    .lantern:nth-child(3) {
+      bottom: 15%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    .lantern:nth-child(4) {
+      bottom: 25%;
+      right: 10%;
+      animation-delay: 6s;
+    }
+
+    @keyframes float-lantern {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-30px) rotate(5deg);
+      }
+    }
+
+    /* Contenedor principal */
+    .coming-soon-container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 40px 40px;
+      background: rgba(255, 248, 231, 0.95);
+      border-radius: 30px;
+      border: 4px solid rgba(155, 89, 182, 0.4);
+      box-shadow: 0 20px 60px rgba(155, 89, 182, 0.3);
+      max-width: 600px;
+      margin: 20px;
+      animation: fadeInScale 1s ease-out;
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Icono de torre */
+    .tower-icon {
+      font-size: 5rem;
+      margin-bottom: 15px;
+      animation: pulse 2s ease-in-out infinite;
+      filter: drop-shadow(0 5px 15px rgba(155, 89, 182, 0.4));
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    /* Título principal */
+    .main-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+      filter: drop-shadow(2px 2px 4px rgba(155, 89, 182, 0.3));
+    }
+
+    /* Subtítulo */
+    .subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--purple-dark);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    /* Mensaje principal */
+    .message {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    @keyframes sparkle-pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+    }
+
+    /* Fecha */
+    .event-date {
+      margin-top: 8px;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: inline-block;
+      box-shadow: 0 5px 20px rgba(155, 89, 182, 0.4);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .coming-soon-container {
+        padding: 40px 25px;
+        margin: 15px;
+      }
+
+      .tower-icon {
+        font-size: 4rem;
+      }
+
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+      }
+
+      .message {
+        font-size: 1rem;
+      }
+
+      .lantern {
+        width: 30px;
+        height: 45px;
+        z-index: 20;
+        opacity: 0.6;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Linternas flotantes -->
+  <div class="lantern"></div>
+  <div class="lantern"></div>
+  <div class="lantern"></div>
+  <div class="lantern"></div>
+
+  <!-- Contenedor principal -->
+  <div class="coming-soon-container">
+    <div class="tower-icon">👑</div>
+    
+    <h1 class="main-title">15 Años de Sara Valeria</h1>
+    
+    <p class="message">
+      Muy pronto podrás ver y compartir una experiencia adicional para los quince años de Sara.
+      Prepárate para vivir un momento inolvidable lleno de magia, alegría y recuerdos que durarán para siempre.
+      Podrás ver la ruta de llegada, compartir fotos, notas y mucho más.
+    </p>
+    
+    <div class="event-date">
+      🗓 13 de Diciembre, 2025
+      <br>
+      🕐 4:00 PM
+    </div>
+  </div>
+</body>
+</html>
