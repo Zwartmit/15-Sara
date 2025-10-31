@@ -1,0 +1,7 @@
+# Servir assets normalmente
+/assets/*  /assets/:splat  200
+
+# Redirigir todo lo demás a proximamente.html
+/index.html  /proximamente.html  200
+/pages/*  /proximamente.html  200
+/*  /proximamente.html  200
