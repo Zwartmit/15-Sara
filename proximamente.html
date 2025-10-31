@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Próximamente - 15 Años de Sara Valeria 👑</title>
-  <link rel="icon" href="./assets/rapunzel.png?v=1" type="image/png">
-  <link rel="apple-touch-icon" href="./assets/rapunzel.png?v=1">
+  <link rel="icon" href="assets/rapunzel.png?v=2" type="image/png">
+  <link rel="apple-touch-icon" href="assets/rapunzel.png?v=2">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +63,7 @@
       position: absolute;
       width: 60px;
       height: 80px;
-      background-image: url('./assets/linterna.png');
+      background-image: url('assets/linterna.png');
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -258,7 +258,7 @@
         console.log('🔧 Ruta intentada:', './assets/linterna.png');
         console.log('🌐 URL completa:', window.location.origin + '/assets/linterna.png');
       };
-      testImg.src = './assets/linterna.png';
+      testImg.src = 'assets/linterna.png';
       
       // Verificar rapunzel
       const testRapunzel = new Image();
@@ -268,7 +268,7 @@
       testRapunzel.onerror = () => {
         console.error('❌ Error al cargar rapunzel desde:', testRapunzel.src);
       };
-      testRapunzel.src = './assets/rapunzel.png';
+      testRapunzel.src = 'assets/rapunzel.png';
       
       // Log de todas las linternas
       const linternas = document.querySelectorAll('.lantern');
