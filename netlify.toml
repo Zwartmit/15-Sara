@@ -1,9 +1,17 @@
-# Configuración de Netlify
-# Los redirects están en el archivo _redirects
+# Configuración de Netlify para mostrar página "Próximamente"
+# Mientras el sitio está en construcción
 
 [build]
   publish = "."
 
+# Redirigir todas las rutas a proximamente.html
+[[redirects]]
+  from = "/*"
+  to = "/proximamente.html"
+  status = 200
+  force = true
+
 # Nota: Para activar el sitio completo cuando esté listo:
-# 1. Elimina el archivo _redirects
-# 2. Haz commit y push a GitHub
+# 1. Elimina este archivo netlify.toml
+# 2. O comenta/elimina la sección [[redirects]]
+# 3. Haz commit y push a GitHub
