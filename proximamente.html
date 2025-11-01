@@ -113,6 +113,7 @@
       z-index: 10;
       text-align: center;
       padding: 40px 40px;
+      padding-top: 160px;
       background: rgba(255, 248, 231, 0.95);
       border-radius: 30px;
       border: 4px solid rgba(155, 89, 182, 0.4);
@@ -120,6 +121,17 @@
       max-width: 600px;
       margin: 20px;
       animation: fadeInScale 1s ease-out;
+    }
+
+    /* Imagen de Rapunzel asomándose */
+    .rapunzel-peek {
+      position: relative;
+      display: block;
+      margin-bottom: -38px;
+      max-width: 250px;
+      width: 100%;
+      z-index: 15;
+      filter: drop-shadow(0 10px 25px rgba(155, 89, 182, 0.8));
     }
 
     @keyframes fadeInScale {
@@ -206,7 +218,14 @@
     @media (max-width: 768px) {
       .coming-soon-container {
         padding: 40px 25px;
+        padding-top: 140px;
         margin: 15px;
+      }
+
+      .rapunzel-peek {
+        margin-bottom: -130px;
+        max-width: 300px;
+        width: 80%;
       }
 
       .tower-icon {
@@ -255,24 +274,28 @@
     <img src="linterna.png" alt="Linterna flotante">
   </div>
 
-  <!-- Contenedor principal -->
-  <div class="coming-soon-container">
-    <div class="tower-icon">👑</div>
-    
-    <h1 class="main-title">15 Años de Sara Valeria</h1>
-    
-    <p class="message">
-      Muy pronto podrás ver y compartir una experiencia adicional para los quince años de Sara.
-      Prepárate para vivir un momento inolvidable lleno de magia, alegría y recuerdos que durarán para siempre.
-      Podrás ver la ruta de llegada, compartir fotos, notas y mucho más.
-    </p>
-    
-    <div class="event-date">
-      📍 Salón de eventos La Ceibita
-      <br>
-      ✨ 13 de Diciembre, 2025
-      <br>
-      🕐 4:00 PM
+  <!-- Wrapper para centrar todo -->
+  <div style="display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 600px; margin: 0 auto;">
+    <img src="rapscal.png" alt="Rapunzel asomándose" class="rapunzel-peek">
+    <!-- Contenedor principal -->
+    <div class="coming-soon-container">
+      <div class="tower-icon">👑</div>
+      
+      <h1 class="main-title">15 Años de Sara Valeria</h1>
+      
+      <p class="message">
+        Muy pronto podrás ver y compartir una experiencia adicional para los quince años de Sara.
+        Prepárate para vivir un momento inolvidable lleno de magia, alegría y recuerdos que durarán para siempre.
+        Podrás ver la ruta de llegada, compartir fotos, notas y mucho más.
+      </p>
+      
+      <div class="event-date">
+        📍 Salón de eventos La Ceibita
+        <br>
+        ✨ 13 de Diciembre, 2025
+        <br>
+        🕐 4:00 PM
+      </div>
     </div>
   </div>
 </body>
