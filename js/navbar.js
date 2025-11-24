@@ -40,8 +40,10 @@ async function loadNavbar() {
     if (isHome) {
       const links = navbarContainer.querySelector('.nav-links');
       const burger = navbarContainer.querySelector('.hamburger');
+      const hint = navbarContainer.querySelector('.nav-hint');
       if (links) links.style.display = 'none';
       if (burger) burger.style.display = 'none';
+      if (hint) hint.style.display = 'none';
     }
 
     // Resaltar página actual
@@ -69,6 +71,30 @@ function highlightCurrentPage() {
     }
   });
 }
+
+// Toggle menú móvil
+function toggleMobileMenu() {
+  const navLinks = document.querySelector('.nav-links');
+  const hamburgerMenu = document.querySelector('.hamburger-menu');
+
+  if (navLinks) navLinks.classList.toggle('active');
+  if (hamburgerMenu) hamburgerMenu.classList.toggle('active');
+}
+
+// Cerrar menú al hacer clic en un enlace
+document.addEventListener('DOMContentLoaded', () => {
+  const navLinks = document.querySelectorAll('.nav-links a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const menu = document.querySelector('.nav-links');
+      const hamburger = document.querySelector('.hamburger');
+      if (menu && menu.classList.contains('active')) {
+        menu.classList.remove('active');
+        if (hamburger) hamburger.classList.remove('active');
+      }
+    });
+  });
+});
 
 // Cargar navbar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', loadNavbar);

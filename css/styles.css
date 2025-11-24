@@ -112,10 +112,166 @@ body::before {
   padding: 15px;
 }
 
+
 /* Padding top para secciones principales */
 .section-padding {
   padding-top: 260px;
 }
+
+/* Responsive padding para diferentes tamaños de pantalla */
+@media (max-width: 480px) {
+  .section-padding {
+    padding-top: 330px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .section-padding {
+    padding-top: 270px;
+  }
+}
+
+/* Botón hamburger con texto - oculto por defecto en desktop */
+.hamburger-menu {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 0;
+}
+
+.hamburger-menu:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: var(--gold);
+  transform: scale(1.05);
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 25px;
+  height: 20px;
+}
+
+.hamburger span {
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.menu-text {
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.hamburger-menu.active .hamburger span:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+
+.hamburger-menu.active .hamburger span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.active .hamburger span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+/* Responsive: Mostrar hamburger en móvil y tablets */
+@media (max-width: 1024px) {
+  .hamburger-menu {
+    display: flex;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, rgba(155, 89, 182, 0.98), rgba(142, 68, 173, 0.98));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    box-shadow: 0 4px 20px rgba(108, 52, 131, 0.4);
+    border-top: 2px solid var(--gold);
+    padding: 0;
+  }
+
+  .nav-links.active {
+    max-height: 600px;
+    padding: 20px 10px;
+  }
+
+  .nav-links li {
+    width: 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .nav-links a {
+    width: auto;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-hint {
+    display: none;
+  }
+
+  /* Agregar el texto indicativo al final del menú desplegable */
+  .nav-links::after {
+    content: "Haz clic en los iconos para navegar ✨";
+    width: 100%;
+    text-align: center;
+    color: var(--gold);
+    font-size: 0.85rem;
+    padding: 15px 0 5px 0;
+    font-weight: 500;
+    opacity: 0.9;
+    animation: fadeInPulse 2s ease-in-out infinite;
+  }
+
+  /* Reducir padding en tablets y móviles con menú hamburger */
+  .section-padding {
+    padding-top: 200px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-padding {
+    padding-top: 220px !important;
+  }
+
+  /* Ajuste para móviles muy pequeños si es necesario */
+  .nav-links li {
+    width: 33.33%;
+    /* Mantener 3 columnas incluso en móvil pequeño si caben */
+  }
+}
+
 
 /* Efectos de vidrio (glassmorphism) - Tema Rapunzel */
 .glass {
@@ -750,6 +906,6 @@ body::before {
 
   /* Ajustar padding del Hero Section en móviles */
   section.container {
-    padding-top: 310px !important;
+    padding-top: auto !important;
   }
 }
