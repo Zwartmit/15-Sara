@@ -5,24 +5,11 @@
   publish = "."
 
 # Redirigir todas las rutas HTML a proximamente.html
-[[redirects]]
-  from = "/"
-  to = "/index.html"
-  status = 200
-  force = true
 
 [[redirects]]
-  from = "/index.html"
+  from = "/*"
   to = "/index.html"
   status = 200
-  force = true
-
-[[redirects]]
-  from = "/pages/*"
-  to = "/index.html"
-  status = 200
-  force = true
-
 # Nota: Para activar el sitio completo cuando esté listo:
 # 1. Elimina este archivo netlify.toml
 # 2. O comenta/elimina la sección [[redirects]]
