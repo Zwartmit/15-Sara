@@ -243,15 +243,15 @@ body::before {
 
   /* Agregar el texto indicativo al final del menú desplegable */
   .nav-links::after {
-    content: "Haz clic en los iconos para navegar ✨";
+    content: "Haz clic en los iconos para navegar";
     width: 100%;
     text-align: center;
     color: var(--gold);
     font-size: 0.85rem;
-    padding: 15px 0 5px 0;
     font-weight: 500;
     opacity: 0.9;
     animation: fadeInPulse 2s ease-in-out infinite;
+    padding: 0px 0 5px 0;
   }
 
   /* Reducir padding en tablets y móviles con menú hamburger */

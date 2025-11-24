@@ -39,7 +39,7 @@ async function loadNavbar() {
     // Ocultar botones en Home (index)
     if (isHome) {
       const links = navbarContainer.querySelector('.nav-links');
-      const burger = navbarContainer.querySelector('.hamburger');
+      const burger = navbarContainer.querySelector('.hamburger-menu');
       const hint = navbarContainer.querySelector('.nav-hint');
       if (links) links.style.display = 'none';
       if (burger) burger.style.display = 'none';
@@ -87,10 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
       const menu = document.querySelector('.nav-links');
-      const hamburger = document.querySelector('.hamburger');
+      const hamburgerMenu = document.querySelector('.hamburger-menu');
       if (menu && menu.classList.contains('active')) {
         menu.classList.remove('active');
-        if (hamburger) hamburger.classList.remove('active');
+        if (hamburgerMenu) hamburgerMenu.classList.remove('active');
       }
     });
   });
