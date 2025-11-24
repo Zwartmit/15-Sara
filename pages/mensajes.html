@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mensajes - Felicita a Sara | 15 Años de Sara</title>
-  <link rel="icon" href="../rapunzel.png">
+  <title>Mensajes para Sara</title>
+  <link rel="icon" href="../assets/images/rapunzel.png">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Indie+Flower&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
   
   <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,6 +28,9 @@
   
   <!-- Config -->
   <script src="../config.js"></script>
+  
+  <!-- Navbar Script -->
+  <script src="../js/navbar.js"></script>
   
   <style>
     /* Layout de dos columnas */
@@ -192,16 +195,16 @@
       display: block;
       margin-bottom: 8px;
       font-weight: 600;
-      color: var(--gold);
+      color: #9b59b6;
     }
     
     .form-input, .form-textarea {
       width: 100%;
       padding: 12px 16px;
       border-radius: 10px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
+      border: 2px solid rgba(255, 255, 255);
+      background: rgb(255, 255, 255);
+      color: black;
       font-family: 'Poppins', sans-serif;
       font-size: 1rem;
       transition: all 0.3s ease;
@@ -210,11 +213,11 @@
     .form-input:focus, .form-textarea:focus {
       outline: none;
       border-color: var(--accent);
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 1);
     }
     
     .form-input::placeholder, .form-textarea::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgb(178, 178, 178);
     }
     
     .form-textarea {
@@ -228,27 +231,81 @@
       opacity: 0.7;
       margin-top: 5px;
     }
+    
+    /* Mostrar/ocultar hints según dispositivo */
+    .mobile-hint {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .desktop-hint {
+        display: none;
+      }
+      
+      .mobile-hint {
+        display: block;
+      }
+    }
+    
+    /* Canvas container */
+    #canvas-container {
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    /* Botones de Zoom */
+    .zoom-controls {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 10;
+      pointer-events: auto;
+    }
+    
+    .zoom-btn {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      border: 2px solid #9b59b6;
+      background: rgba(255, 255, 255, 0.95);
+      color: #9b59b6;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+      touch-action: auto;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .zoom-btn:hover {
+      background: #9b59b6;
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(155, 89, 182, 0.5);
+    }
+    
+    .zoom-btn:active {
+      transform: scale(0.95);
+      background: #9b59b6;
+      color: white;
+    }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="../index.html" class="nav-brand">👑 Sara's 15</a>
-      <ul class="nav-links">
-        <li><a href="../index.html">Inicio</a></li>
-        <li><a href="mapa.html">Mapa</a></li>
-        <li><a href="galeria.html">Galería</a></li>
-        <li><a href="mensajes.html">Mensajes</a></li>
-        <li><a href="itinerario.html">Itinerario</a></li>
-      </ul>
-    </div>
-  </nav>
+  <!-- Navbar Container -->
+  <div id="navbar-container"></div>
 
   <!-- Contenido Principal -->
-  <section class="container" style="padding-top: 85px;">
-    <div class="fade-in text-center mb-6">
-      <h1 class="text-4xl md:text-5xl font-bold mb-3" style="color: var(--gold);">
+  <section class="container section-padding">
+    <div class="fade-in text-center mb-8">
+      <h1 class="text-3xl md:text-5xl font-bold mb-4" style="color: var(--gold);">
         💌 Mensajes para Sara
       </h1>
       <p class="text-lg opacity-90">
@@ -262,11 +319,11 @@
       <div class="messages-column">
         <!-- Formulario de Mensaje -->
         <div class="glass p-6">
-      <h2 class="text-2xl font-bold mb-5" style="color: var(--gold);">✍️ Escribe tu Mensaje</h2>
+      <h2 class="text-2xl font-bold mb-5" style="color: #9b59b6;">✍️ Escribe tu mensaje</h2>
       
       <form id="message-form" onsubmit="submitMessage(event)">
         <div class="form-group">
-          <label class="form-label">Tu Nombre *</label>
+          <label class="form-label">Tu nombre *</label>
           <input 
             type="text" 
             id="author-name" 
@@ -278,7 +335,7 @@
         </div>
         
         <div class="form-group">
-          <label class="form-label">Tu Mensaje para Sara *</label>
+          <label class="form-label">Tu mensaje para Sara *</label>
           <textarea 
             id="message-content" 
             class="form-textarea" 
@@ -294,7 +351,7 @@
         
         <div class="text-center">
           <button type="submit" class="btn-primary">
-            💌 Enviar Mensaje
+            💌 Enviar mensaje
           </button>
         </div>
       </form>
@@ -305,20 +362,27 @@
       <div class="messages-column">
         <!-- Muro de Mensajes 3D -->
         <div class="glass p-6">
-      <h2 class="text-2xl font-bold mb-4 text-center" style="color: var(--gold);">💬 Tablero de Felicitaciones</h2>
-      <p class="text-center mb-3 opacity-90 text-sm">🖱️ Arrastra para mover el tablero • 🔍 Scroll para ajustar el zoom</p>
+        <h2 class="text-2xl font-bold mb-4 text-center" style="color: #9b59b6;">💟 Tablero de notas</h2>
+        <p class="text-center mb-3 opacity-90 text-sm desktop-hint">🖱️ Arrastra para mover el tablero <br> ↕ Scrollea para ajustar el zoom</p>
+        <p class="text-center mb-3 opacity-90 text-sm mobile-hint">💠 Arrastra para mover el tablero <br> 🤏🏽 Pellizca para ajustar el zoom</p>
       
-          <!-- Canvas 3D -->
-          <div id="canvas-container">
-            <canvas id="messages-canvas"></canvas>
+        <!-- Canvas 3D -->
+        <div id="canvas-container" style="position: relative;">
+          <canvas id="messages-canvas"></canvas>
+          
+          <!-- Botones de Zoom -->
+          <div class="zoom-controls">
+            <button id="zoom-in-btn" class="zoom-btn" title="Acercar">➕</button>
+            <button id="zoom-out-btn" class="zoom-btn" title="Alejar">➖</button>
           </div>
+        </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer style="text-align: center; padding: 40px 20px; margin-top: 20px; opacity: 0.8;">
+  <footer style="text-align: center; padding: 40px 20px; opacity: 0.8;">
     <p>Hecho con 💖 para celebrar los 15 años de Sara</p>
   </footer>
 

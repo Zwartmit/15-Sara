@@ -178,18 +178,36 @@ function openInMaps(app) {
 // Formatear fecha
 function formatDate(dateString) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString('es-ES', options);
+  return new Date(dateString + 'T12:00:00').toLocaleDateString('es-ES', options);
 }
 
-// Inicializar cuando cargue el DOM
-document.addEventListener('DOMContentLoaded', () => {
+// Función callback para Google Maps (se llama automáticamente cuando la API está lista)
+function initializeMap() {
+  // Asegurar que el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startMapInitialization);
+  } else {
+    startMapInitialization();
+  }
+}
+
+// Inicializar cuando cargue el DOM y Google Maps esté listo
+function startMapInitialization() {
   const startBtn = document.getElementById('start-route-btn');
   if (startBtn) {
     startBtn.addEventListener('click', getMyLocation);
   }
 
-  // Si ya existe el mapa, inicializar
+  // Si ya existe el mapa, pedir ubicación automáticamente
   if (document.getElementById('map')) {
-    initMap(null);
+    getMyLocation();
+  }
+}
+
+// Compatibilidad: si no se usa callback, inicializar normalmente
+document.addEventListener('DOMContentLoaded', () => {
+  // Solo inicializar si Google Maps ya está cargado y no se ha inicializado
+  if (typeof google !== 'undefined' && google.maps && !map) {
+    startMapInitialization();
   }
 });

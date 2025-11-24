@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Itinerario - Programa del Evento | 15 Años de Sara</title>
-  <link rel="icon" href="../rapunzel.png">
+  <title>Itinerario del evento</title>
+  <link rel="icon" href="../assets/images/rapunzel.png">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
   
   <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -19,7 +19,25 @@
   <!-- Config -->
   <script src="../config.js"></script>
   
+  <!-- Navbar Script -->
+  <script src="../js/navbar.js"></script>
+  
   <style>
+    /* Event details flex */
+    .event-details-flex {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    
+    @media (max-width: 768px) {
+      .event-details-flex {
+        gap: 0;
+        flex-direction: column;
+      }
+    }
+    
     .timeline {
       position: relative;
       padding: 20px 0;
@@ -141,49 +159,32 @@
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="../index.html" class="nav-brand">👑 Sara's 15</a>
-      <ul class="nav-links">
-        <li><a href="../index.html">Inicio</a></li>
-        <li><a href="mapa.html">Mapa</a></li>
-        <li><a href="galeria.html">Galería</a></li>
-        <li><a href="mensajes.html">Mensajes</a></li>
-        <li><a href="itinerario.html">Itinerario</a></li>
-      </ul>
-    </div>
-  </nav>
+  <!-- Navbar Container -->
+  <div id="navbar-container"></div>
 
   <!-- Contenido Principal -->
-  <section class="container" style="padding-top: 100px;">
+  <section class="container section-padding">
     <div class="fade-in text-center mb-8">
-      <h1 class="text-5xl md:text-6xl font-bold mb-4" style="color: var(--gold);">
-        📅 Itinerario del Evento
+      <h1 class="text-3xl md:text-5xl font-bold mb-4" style="color: var(--gold);">
+        📝 Itinerario del Evento
       </h1>
-      <p class="text-xl opacity-90">
-        Conoce el programa completo. ¡No te pierdas ningún momento especial!
+      <p class="text-lg opacity-90">
+        Conoce el cronograma completo. ¡No te pierdas ningún momento especial!
       </p>
     </div>
 
     <!-- Información General -->
     <div class="glass p-8 mb-8 text-center">
-      <h2 class="text-3xl font-bold mb-4" style="color: var(--gold);">📍 Detalles del Evento</h2>
-      <div class="grid grid-2">
-        <div>
-          <p class="text-lg mb-3"><strong>📅 Fecha:</strong> <span id="event-date"></span></p>
-          <p class="text-lg mb-3"><strong>🏰 Lugar:</strong> <span id="event-place"></span></p>
-        </div>
-        <div>
-          <p class="text-lg mb-3"><strong>🕐 Inicio:</strong> <span id="event-time"></span></p>
-          <p class="text-lg mb-3"><strong>📍 Dirección:</strong> <span id="event-address"></span></p>
-        </div>
+      <h2 class="text-3xl font-bold mb-4" style="color: #9b59b6;">📍 Detalles del evento</h2>
+      <div class="event-details-flex">
+        <p class="text-lg"><strong>📅 Fecha y hora:</strong> <span id="event-date"></span> <span id="event-time"></span></p>
+        <p class="text-lg"><strong>🏰 Lugar:</strong> <span id="event-place"></span></p>
       </div>
     </div>
 
     <!-- Timeline del Itinerario -->
     <div class="glass p-8 mb-8">
-      <h2 class="text-3xl font-bold mb-8 text-center" style="color: var(--gold);">⏱️ Cronograma</h2>
+      <h2 class="text-3xl font-bold mb-8 text-center" style="color: #9b59b6;">⏱️ Cronograma</h2>
       
       <div class="timeline" id="timeline-container">
         <!-- Se llenará dinámicamente -->
@@ -192,36 +193,30 @@
 
     <!-- Consejos y Recomendaciones -->
     <div class="glass p-8">
-      <h2 class="text-3xl font-bold mb-6" style="color: var(--gold);">💡 Consejos para Disfrutar al Máximo</h2>
+      <h2 class="text-3xl font-bold mb-6 text-center" style="color: #9b59b6;">💡 Consejos para disfrutar al máximo</h2>
       
       <div class="tips-grid">
         <div class="tip-card">
           <span class="tip-icon">⏰</span>
           <h3 class="font-bold mb-2">Puntualidad</h3>
-          <p class="text-sm opacity-90">Llega 15-20 minutos antes para encontrar buen lugar</p>
-        </div>
-        
-        <div class="tip-card">
-          <span class="tip-icon">📱</span>
-          <h3 class="font-bold mb-2">Carga tu Teléfono</h3>
-          <p class="text-sm opacity-90">Querrás capturar muchos momentos especiales</p>
+          <p class="text-sm opacity-90">Llega 15-20 minutos antes</p>
         </div>
         
         <div class="tip-card">
           <span class="tip-icon">👗</span>
-          <h3 class="font-bold mb-2">Código de Vestimenta</h3>
-          <p class="text-sm opacity-90">Formal / Elegante - Luce espectacular</p>
+          <h3 class="font-bold mb-2">Código de vestimenta</h3>
+          <p class="text-sm opacity-90">Formal / Elegante</p>
         </div>
         
         <div class="tip-card">
           <span class="tip-icon">💃</span>
-          <h3 class="font-bold mb-2">Prepárate para Bailar</h3>
+          <h3 class="font-bold mb-2">Prepárate para bailar</h3>
           <p class="text-sm opacity-90">¡Zapatos cómodos para la pista de baile!</p>
         </div>
         
         <div class="tip-card">
           <span class="tip-icon">📸</span>
-          <h3 class="font-bold mb-2">Comparte Fotos</h3>
+          <h3 class="font-bold mb-2">Comparte fotos</h3>
           <p class="text-sm opacity-90">Sube tus mejores momentos a la galería</p>
         </div>
         
@@ -232,33 +227,16 @@
         </div>
       </div>
     </div>
-
-    <!-- Información Adicional -->
-    <div class="glass mt-8 p-6">
-      <h3 class="text-2xl font-bold mb-4" style="color: var(--gold);">📝 Información Importante</h3>
-      <ul style="list-style: none; line-height: 2;">
-        <li>🅿️ <strong>Estacionamiento:</strong> Disponible en el lugar del evento</li>
-        <li>🍽️ <strong>Cena:</strong> Se servirá cena completa para todos los invitados</li>
-        <li>🎵 <strong>Música:</strong> DJ en vivo durante toda la noche</li>
-        <li>🏰 <strong>Ambiente:</strong> Decoración temática de cuento de hadas</li>
-      </ul>
-    </div>
   </section>
 
   <!-- Footer -->
-  <footer style="text-align: center; padding: 40px 20px; margin-top: 60px; opacity: 0.8;">
+  <footer style="text-align: center; padding: 40px 20px; opacity: 0.8;">
     <p>Hecho con 💖 para celebrar los 15 años de Sara</p>
   </footer>
 
   <!-- Scripts -->
   <script src="../js/app.js"></script>
   <script>
-    // Cargar información del evento
-    document.getElementById('event-date').textContent = new Date(CONFIG.evento.fecha).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
-    document.getElementById('event-time').textContent = CONFIG.evento.hora;
-    document.getElementById('event-place').textContent = CONFIG.evento.lugar;
-    document.getElementById('event-address').textContent = CONFIG.evento.direccion;
-
     // Generar timeline
     function generateTimeline() {
       const container = document.getElementById('timeline-container');
@@ -293,7 +271,33 @@
 
     // Inicializar
     document.addEventListener('DOMContentLoaded', () => {
-      generateTimeline();
+      // Verificar que CONFIG esté disponible
+      if (typeof CONFIG === 'undefined') {
+        console.error('CONFIG no está definido');
+        return;
+      }
+      
+      // Cargar información del evento
+      const eventDateEl = document.getElementById('event-date');
+      const eventTimeEl = document.getElementById('event-time');
+      const eventPlaceEl = document.getElementById('event-place');
+      
+      if (eventDateEl && CONFIG.evento && CONFIG.evento.fecha) {
+        eventDateEl.textContent = new Date(CONFIG.evento.fecha + 'T12:00:00').toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+      
+      if (eventTimeEl && CONFIG.evento && CONFIG.evento.hora) {
+        eventTimeEl.textContent = ' a las ' + CONFIG.evento.hora;
+      }
+      
+      if (eventPlaceEl && CONFIG.evento && CONFIG.evento.lugar) {
+        eventPlaceEl.textContent = CONFIG.evento.lugar;
+      }
+      
+      // Generar timeline
+      if (CONFIG.itinerario && CONFIG.itinerario.length > 0) {
+        generateTimeline();
+      }
     });
   </script>
 </body>

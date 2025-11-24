@@ -32,9 +32,9 @@ Edita `config.js` con la información de tu evento:
 ```javascript
 evento: {
   nombre: "Sara",
-  fecha: "2025-12-15",
+  fecha: "2025-12-13",
   hora: "18:00",
-  lugar: "Centro Comercial Iwoka",
+  lugar: "Salón de eventos La Ceibita",
   // ... más configuraciones
 }
 ```
@@ -42,15 +42,18 @@ evento: {
 ### 3. Ejecuta Localmente
 
 **Opción A - Live Server (VS Code):**
+
 - Instala la extensión "Live Server"
 - Clic derecho en `index.html` > "Open with Live Server"
 
 **Opción B - Python:**
+
 ```bash
 python -m http.server 8000
 ```
 
 **Opción C - Node.js:**
+
 ```bash
 npx http-server -p 8000
 ```
@@ -62,6 +65,7 @@ Abre: `http://localhost:8000`
 Lee la guía completa en [`SETUP.md`](./SETUP.md)
 
 Resumen:
+
 1. Crea proyecto en [Google Cloud Console](https://console.cloud.google.com/)
 2. Habilita Drive API y Picker API
 3. Crea credenciales OAuth 2.0
@@ -123,30 +127,35 @@ Resumen:
 ## 📱 Funcionalidades Detalladas
 
 ### Dashboard (index.html)
+
 - Contador regresivo hasta el evento
 - Navegación principal con cards
 - Información del evento
 - Diseño responsive
 
 ### Mapa (pages/mapa.html)
+
 - Mapa interactivo con Google Maps
 - Navegación en tiempo real desde la ubicación del usuario
 - Botones para abrir en Google Maps / Waze
 - Información de distancia y tiempo estimado
 
 ### Galería (pages/galeria.html)
+
 - Subida de fotos y videos a Google Drive
 - Preview de archivos subidos
 - Acceso compartido para todos
 - Soporta múltiples formatos
 
 ### Mensajes (pages/mensajes.html)
+
 - Formulario para enviar felicitaciones
 - Muro de mensajes públicos
 - Almacenamiento en localStorage
 - Contador de caracteres
 
 ### Itinerario (pages/itinerario.html)
+
 - Timeline visual del evento
 - Horarios y actividades
 - Consejos y recomendaciones
@@ -199,6 +208,7 @@ itinerario: [
 Ver guía completa en [`SETUP.md`](./SETUP.md)
 
 **Problema común:**
+
 - Si la galería no funciona, verifica que:
   1. El `clientId` esté configurado
   2. El `folderId` sea correcto

@@ -74,12 +74,44 @@ function init3DScene() {
   canvas.addEventListener('mousedown', onMouseDown);
   canvas.addEventListener('mousemove', onMouseMove);
   canvas.addEventListener('mouseup', onMouseUp);
-  canvas.addEventListener('wheel', onMouseWheel);
-  canvas.addEventListener('touchstart', onTouchStart);
-  canvas.addEventListener('touchmove', onTouchMove);
-  canvas.addEventListener('touchend', onTouchEnd);
+  canvas.addEventListener('wheel', onMouseWheel, { passive: false });
+  canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+  canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+  canvas.addEventListener('touchend', onTouchEnd, { passive: false });
   
   window.addEventListener('resize', onWindowResize);
+  
+  // Botones de zoom
+  const zoomInBtn = document.getElementById('zoom-in-btn');
+  const zoomOutBtn = document.getElementById('zoom-out-btn');
+  
+  const zoomIn = () => {
+    camera.position.z -= 2;
+    camera.position.z = Math.max(10, Math.min(35, camera.position.z));
+  };
+  
+  const zoomOut = () => {
+    camera.position.z += 2;
+    camera.position.z = Math.max(10, Math.min(35, camera.position.z));
+  };
+  
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener('click', zoomIn);
+    zoomInBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      zoomIn();
+    });
+  }
+  
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener('click', zoomOut);
+    zoomOutBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      zoomOut();
+    });
+  }
   
   // Iniciar animación
   animate();
@@ -179,8 +211,8 @@ function createPostit3D(message, index, total) {
   textMesh.position.z = 0.041;
   group.add(textMesh);
   
-  // Posición en grid (más espaciado para mejor visualización)
-  const cols = 4;
+  // Posición en grid (8 columnas para más densidad)
+  const cols = 8;
   const rows = Math.ceil(total / cols);
   const col = index % cols;
   const row = Math.floor(index / cols);
@@ -311,9 +343,9 @@ function onMouseMove(event) {
   targetPositionX += deltaX * 0.02;
   targetPositionY -= deltaY * 0.02; // Invertir Y para movimiento natural
   
-  // Limitar movimiento para no perder el tablero
-  targetPositionX = Math.max(-20, Math.min(20, targetPositionX));
-  targetPositionY = Math.max(-20, Math.min(20, targetPositionY));
+  // Limitar movimiento para no perder el tablero (límites ampliados para más notas)
+  targetPositionX = Math.max(-50, Math.min(50, targetPositionX));
+  targetPositionY = Math.max(-100, Math.min(100, targetPositionY));
   
   mouseX = event.clientX;
   mouseY = event.clientY;
@@ -331,16 +363,27 @@ function onMouseWheel(event) {
 
 // Touch events
 let touchStartX = 0, touchStartY = 0;
+let initialPinchDistance = 0;
 
 function onTouchStart(event) {
+  event.preventDefault(); // Prevenir scroll de la página
+  
   if (event.touches.length === 1) {
     touchStartX = event.touches[0].clientX;
     touchStartY = event.touches[0].clientY;
+  } else if (event.touches.length === 2) {
+    // Calcular distancia inicial para pinch zoom
+    const dx = event.touches[0].clientX - event.touches[1].clientX;
+    const dy = event.touches[0].clientY - event.touches[1].clientY;
+    initialPinchDistance = Math.sqrt(dx * dx + dy * dy);
   }
 }
 
 function onTouchMove(event) {
+  event.preventDefault(); // Prevenir scroll de la página
+  
   if (event.touches.length === 1) {
+    // Arrastrar con un dedo
     const deltaX = event.touches[0].clientX - touchStartX;
     const deltaY = event.touches[0].clientY - touchStartY;
     
@@ -348,17 +391,32 @@ function onTouchMove(event) {
     targetPositionX += deltaX * 0.02;
     targetPositionY -= deltaY * 0.02;
     
-    // Limitar movimiento
-    targetPositionX = Math.max(-20, Math.min(20, targetPositionX));
-    targetPositionY = Math.max(-20, Math.min(20, targetPositionY));
+    // Limitar movimiento (límites ampliados para más notas)
+    targetPositionX = Math.max(-50, Math.min(50, targetPositionX));
+    targetPositionY = Math.max(-100, Math.min(100, targetPositionY));
     
     touchStartX = event.touches[0].clientX;
     touchStartY = event.touches[0].clientY;
+  } else if (event.touches.length === 2) {
+    // Pinch zoom con dos dedos
+    const dx = event.touches[0].clientX - event.touches[1].clientX;
+    const dy = event.touches[0].clientY - event.touches[1].clientY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    if (initialPinchDistance > 0) {
+      const delta = distance - initialPinchDistance;
+      camera.position.z -= delta * 0.05;
+      camera.position.z = Math.max(10, Math.min(35, camera.position.z));
+    }
+    
+    initialPinchDistance = distance;
   }
 }
 
-function onTouchEnd() {
-  // No hacer nada
+function onTouchEnd(event) {
+  if (event.touches.length === 0) {
+    initialPinchDistance = 0;
+  }
 }
 
 function onWindowResize() {

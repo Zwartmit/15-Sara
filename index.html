@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>15 Años de Sara Valeria 👑</title>
-  <link rel="icon" href="rapunzel.png">
+  <link rel="icon" href="/assets/images/rapunzel.png">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,104 +19,74 @@
   
   <!-- Config -->
   <script src="config.js"></script>
+  
+  <!-- Navbar Script -->
+  <script src="js/navbar.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-container" style="justify-content: center;">
-      <h1 class="main-title">
-        <span class="title-name">15</span>
-        <span class="title-name">Años de</span>
-        <span class="title-name">Sara Valeria</span>
-      </h1>
-    </div>
-  </nav>
+  <!-- Navbar Container -->
+  <div id="navbar-container"></div>
 
   <!-- Hero Section -->
   <section class="container" style="padding-top: 150px; text-align: center;">
     <div class="fade-in">
       <p class="text-xl md:text-2xl mb-3" style="color: var(--purple-dark); font-weight: 600;">
-        Una aventura mágica que recordaremos para siempre ✨
+        ✨ Una aventura mágica que recordaremos para siempre ✨
       </p>
-      <p class="text-lg opacity-90 mb-6">
-        📅 <span id="event-date"></span> | 🕐 <span id="event-time"></span>
-      </p>
-    </div>
-
     <!-- Contador Regresivo -->
     <div id="countdown" class="countdown"></div>
+    </div>
 
     <!-- Navegación Principal -->
     <div class="grid grid-2" style="margin-top: 40px;">
       <!-- Card Mapa -->
       <a href="pages/mapa.html" class="card" style="text-decoration: none; color: white;">
-        <span class="card-icon float">🗺️</span>
-        <h2 class="card-title">Cómo Llegar</h2>
+        <span class="card-icon float"><img src="./assets/images/mapa.png" alt="Mapa" style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
+        <h2 class="card-title">Cómo llegar</h2>
         <p class="card-description">
-          Encuentra la ruta más rápida al castillo. Navegación en tiempo real.
+          Encuentra la ruta más rápida al castillo
         </p>
       </a>
 
       <!-- Card Galería -->
       <a href="pages/galeria.html" class="card" style="text-decoration: none; color: white;">
-        <span class="card-icon float">📸</span>
-        <h2 class="card-title">Galería</h2>
+        <span class="card-icon float"><img src="./assets/images/galeria.png" alt="Galería" style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
+        <h2 class="card-title">Galería de recuerdos</h2>
         <p class="card-description">
-          Comparte tus fotos y videos del evento. Crea recuerdos inolvidables.
+          Comparte las fotos que captures
         </p>
       </a>
 
       <!-- Card Mensajes -->
       <a href="pages/mensajes.html" class="card" style="text-decoration: none; color: white;">
-        <span class="card-icon float">💌</span>
-        <h2 class="card-title">Mensajes</h2>
+        <span class="card-icon float"><img src="./assets/images/mensajes.png" alt="Mensajes" style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
+        <h2 class="card-title">Mensajes para Sara</h2>
         <p class="card-description">
-          Envía tus mejores deseos. Muro de felicitaciones para Sara.
+          Envía tus mejores deseos
         </p>
       </a>
 
       <!-- Card Itinerario -->
       <a href="pages/itinerario.html" class="card" style="text-decoration: none; color: white;">
-        <span class="card-icon float">📅</span>
-        <h2 class="card-title">Itinerario</h2>
+        <span class="card-icon float"><img src="./assets/images/itinerario.png" alt="Itinerario" style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
+        <h2 class="card-title">Itinerario del evento</h2>
         <p class="card-description">
-          Conoce el programa del evento. No te pierdas ningún momento especial.
+          Conoce el cronograma del evento
         </p>
       </a>
-    </div>
-
-    <!-- Información del Evento -->
-    <div class="glass" style="margin-top: 40px; padding: 30px; text-align: left;">
-      <h2 class="text-2xl font-bold mb-5" style="color: var(--gold);">📍 Información del Evento</h2>
-      <div class="grid grid-2">
-        <div>
-          <p class="text-base mb-2"><strong>🏰 Lugar:</strong> <span id="event-place"></span></p>
-          <p class="text-base mb-2"><strong>📍 Dirección:</strong> <span id="event-address"></span></p>
-        </div>
-        <div>
-          <p class="text-base mb-2"><strong>👗 Código de Vestimenta:</strong> Formal / Elegante</p>
-          <p class="text-base mb-2"><strong>🎁 Mesa de Regalos:</strong> Tu presencia es nuestro mejor regalo</p>
-        </div>
-      </div>
-      <div style="margin-top: 30px; text-align: center;">
-        <a href="pages/mapa.html" class="btn-primary">Ver Ubicación en el Mapa</a>
-      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer style="text-align: center; padding: 30px 20px; margin-top: 40px; opacity: 0.8;">
+  <footer style="text-align: center; padding: 30px 20px; opacity: 0.8;">
     <p style="font-size: 0.9rem;">Hecho con 💖 para celebrar los 15 años de Sara</p>
-    <p style="margin-top: 8px; font-size: 0.8rem;">
-      © 2025 - Todos los derechos reservados
-    </p>
   </footer>
 
   <!-- Scripts -->
   <script src="js/app.js"></script>
   <script>
     // Cargar información del evento
-    document.getElementById('event-date').textContent = new Date(CONFIG.evento.fecha).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('event-date').textContent = new Date(CONFIG.evento.fecha + 'T12:00:00').toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
     document.getElementById('event-time').textContent = CONFIG.evento.hora;
     document.getElementById('event-place').textContent = CONFIG.evento.lugar;
     document.getElementById('event-address').textContent = CONFIG.evento.direccion;

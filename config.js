@@ -7,12 +7,11 @@ const CONFIG = {
   evento: {
     nombre: "Sara",
     fecha: "2025-12-13", // Formato: YYYY-MM-DD
-    hora: "16:00",
-    lugar: "Centro Comercial Iwoka",
-    direccion: "Sogamoso, Boyacá, Colombia",
+    hora: "04:00 pm",
+    lugar: "Salón de eventos La Ceibita",
     coordenadas: {
-      lat: 5.7241147,
-      lng: -72.9227588
+      lat: 5.7008645,
+      lng: -72.9183341
     }
   },
 
@@ -43,12 +42,12 @@ const CONFIG = {
 
   // Itinerario del evento
   itinerario: [
-    { hora: "16:00", actividad: "Recepción de invitados", icono: "🎉" },
-    { hora: "16:30", actividad: "Ceremonia de entrada", icono: "👑" },
-    { hora: "17:00", actividad: "Vals de la quinceañera", icono: "💃" },
-    { hora: "17:30", actividad: "Cena", icono: "🍽️" },
-    { hora: "18:30", actividad: "Baile y diversión", icono: "🎵" },
-    { hora: "21:00", actividad: "Cierre del evento", icono: "✨" }
+    { hora: "04:00 pm", actividad: "Recepción de invitados", icono: "🎉" },
+    { hora: "04:30 pm", actividad: "Ceremonia de entrada", icono: "👑" },
+    { hora: "05:00 pm", actividad: "Vals de la quinceañera", icono: "💃" },
+    { hora: "05:30 pm", actividad: "Cena", icono: "🍽️" },
+    { hora: "06:30 pm", actividad: "Baile y diversión", icono: "🎵" },
+    { hora: "09:00 pm", actividad: "Cierre del evento", icono: "✨" }
   ],
 
   // Temas y colores

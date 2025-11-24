@@ -34,7 +34,7 @@ Edita el archivo `config.js` y actualiza la información del evento:
 ```javascript
 evento: {
   nombre: "Sara",
-  fecha: "2025-12-15",        // ⚠️ Cambia esta fecha
+  fecha: "2025-12-13",        // ⚠️ Cambia esta fecha
   hora: "18:00",              // ⚠️ Cambia la hora
   lugar: "Tu Lugar",          // ⚠️ Nombre del lugar
   direccion: "Dirección",     // ⚠️ Dirección completa

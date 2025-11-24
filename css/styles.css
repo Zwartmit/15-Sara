@@ -23,12 +23,28 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #F8F3FF 0%, #FFF8E7 50%, #FFE5B4 100%);
+  background: linear-gradient(135deg, #F8F3FF 100%, #FFF8E7 50%, #FFE5B4 100%);
+  background-size: 200% 200%;
   background-attachment: fixed;
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  animation: gradientMove 8s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Decoración de fondo - Flores y enredaderas */
@@ -39,7 +55,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     radial-gradient(circle at 20% 80%, rgba(200, 155, 219, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(232, 212, 162, 0.1) 0%, transparent 50%);
   pointer-events: none;
@@ -52,6 +68,7 @@ body::before {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -59,9 +76,12 @@ body::before {
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -71,6 +91,7 @@ body::before {
   0% {
     background-position: -1000px 0;
   }
+
   100% {
     background-position: 1000px 0;
   }
@@ -91,11 +112,14 @@ body::before {
   padding: 15px;
 }
 
+/* Padding top para secciones principales */
+.section-padding {
+  padding-top: 260px;
+}
+
 /* Efectos de vidrio (glassmorphism) - Tema Rapunzel */
 .glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: #fef7e8;
   border: 3px solid var(--glass-border);
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(155, 89, 182, 0.25);
@@ -110,10 +134,8 @@ body::before {
   left: -3px;
   right: -3px;
   bottom: -3px;
-  background: linear-gradient(135deg, var(--primary), var(--accent), var(--primary));
   border-radius: 20px;
   z-index: -1;
-  opacity: 0.15;
 }
 
 /* Botones - Tema Rapunzel */
@@ -133,7 +155,6 @@ body::before {
 }
 
 .btn-primary::before {
-  content: '✨';
   position: absolute;
   left: 10px;
   opacity: 0;
@@ -189,8 +210,10 @@ body::before {
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  gap: 15px;
 }
 
 .nav-brand.logo {
@@ -215,36 +238,41 @@ body::before {
   gap: 15px;
   flex-wrap: wrap;
   margin: 0;
-  padding: 10px 0;
 }
 
 .title-name {
   font-family: 'Dancing Script', cursive;
-  font-size: 4.5rem;
+  font-size: 3.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #FFD700, #FFF8DC, #FFD700);
+  background: linear-gradient(100deg, #FFD700, #FFF8DC, #FFD700);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(2px 2px 8px rgba(255, 215, 0, 0.6));
+  filter: drop-shadow(1px 1px 3px rgba(255, 215, 0, 0.4));
   line-height: 1;
   animation: glow 2s ease-in-out infinite;
 }
 
 @keyframes glow {
-  0%, 100% {
+
+  0%,
+  100% {
     filter: drop-shadow(2px 2px 8px rgba(255, 215, 0, 0.6));
   }
+
   50% {
     filter: drop-shadow(2px 2px 15px rgba(255, 215, 0, 0.9));
   }
 }
 
 @keyframes sparkle {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1) rotate(0deg);
     opacity: 1;
   }
+
   50% {
     transform: scale(1.2) rotate(180deg);
     opacity: 0.8;
@@ -254,26 +282,85 @@ body::before {
 /* Responsive para título */
 @media (max-width: 768px) {
   .title-number {
-    font-size: 3rem;
-  }
-  
-  .title-text {
-    font-size: 1.3rem;
-  }
-  
-  .title-name {
-    font-size: 3.5rem;
-  }
-  
-  .title-sparkle {
     font-size: 2rem;
+  }
+
+  .title-text {
+    font-size: 1rem;
+  }
+
+  .title-name {
+    font-size: 2.5rem;
+  }
+
+  .title-sparkle {
+    font-size: 1rem;
+  }
+
+  .main-title {
+    margin: 0;
+  }
+}
+
+.nav-hint {
+  color: var(--gold);
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.9;
+  text-align: center;
+}
+
+@keyframes fadeInPulse {
+
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-hint {
+    font-size: 0.75rem;
+    margin: 0 0 8px 0;
   }
 }
 
 .nav-links {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  gap: 15px;
   list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-links a {
+  display: block;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  transform: scale(1.05);
 }
 
 .navbar a {
@@ -305,6 +392,72 @@ body::before {
 
 .navbar a:hover::after {
   width: 100%;
+}
+
+/* Estilos para las imágenes del navbar */
+.nav-icon-img {
+  width: 70px;
+  height: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  cursor: pointer;
+  animation: navIconPulse 2s ease-in-out infinite;
+}
+
+/* Animación de pulso sutil para indicar que son clicables */
+@keyframes navIconPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.nav-links a {
+  display: block;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  white-space: nowrap;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-links a::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::before {
+  width: 80%;
+}
+
+.nav-links a:hover {
+  transform: scale(1.05);
+}
+
+.nav-links a:hover .nav-icon-img {
+  transform: scale(1.2) translateY(-3px);
+  filter: drop-shadow(0 6px 12px rgba(255, 215, 0, 0.7));
+  animation: none;
 }
 
 /* Cards */
@@ -364,9 +517,7 @@ body::before {
 .countdown {
   display: flex;
   justify-content: center;
-  margin: 40px 0;
   overflow: visible;
-  padding: 30px 20px;
 }
 
 .countdown-clock {
@@ -431,9 +582,12 @@ body::before {
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     stroke-width: 8;
   }
+
   50% {
     stroke-width: 10;
   }
@@ -470,11 +624,21 @@ body::before {
   filter: drop-shadow(1px 1px 2px rgba(155, 89, 182, 0.3));
 }
 
-.clock-unit {
-  font-size: 0.9rem;
+.clock-unit1 {
+  font-size: 1rem;
   color: var(--text-light);
   font-weight: 600;
   margin-left: 5px;
+}
+
+.clock-unit2 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(1px 1px 2px rgba(155, 89, 182, 0.3));
 }
 
 .clock-label {
@@ -491,21 +655,21 @@ body::before {
     height: 280px;
     padding: 25px 15px 15px 15px;
   }
-  
+
   .countdown {
     padding: 25px 15px;
   }
-  
+
   .clock-center {
     width: 160px;
     height: 160px;
     padding: 20px;
   }
-  
+
   .clock-number {
     font-size: 1.5rem;
   }
-  
+
   .clock-unit {
     font-size: 0.75rem;
   }
@@ -545,46 +709,47 @@ body::before {
   animation: float 3s ease-in-out infinite;
 }
 
+/* Removed hamburger menu - buttons now always visible */
+
 /* Responsive */
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
+  .navbar {
+    padding: 10px 0;
   }
-  
-  .grid-2, .grid-3 {
+
+  .nav-container {
+    gap: 10px;
+    padding: 0 15px;
+  }
+
+  .nav-links {
+    gap: 8px;
+  }
+
+  .nav-links a {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .grid-2,
+  .grid-3 {
     grid-template-columns: 1fr;
   }
-  
+
   .countdown-number {
     font-size: 1.8rem;
   }
-  
+
   .card-icon {
     font-size: 2.5rem;
   }
-  
+
   .container {
     padding: 12px;
   }
-  
+
   /* Ajustar padding del Hero Section en móviles */
   section.container {
-    padding-top: 200px !important;
-  }
-  
-  .title-number {
-    font-size: 3rem;
-  }
-  
-  .title-text {
-    font-size: 1.3rem;
-  }
-  
-  .title-name {
-    font-size: 3.5rem;
-  }
-  
-  .title-sparkle {
-    font-size: 2rem;
+    padding-top: 310px !important;
   }
 }
