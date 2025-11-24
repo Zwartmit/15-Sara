@@ -7,19 +7,19 @@
 # Redirigir todas las rutas HTML a proximamente.html
 [[redirects]]
   from = "/"
-  to = "/proximamente.html"
+  to = "/index.html"
   status = 200
   force = true
 
 [[redirects]]
   from = "/index.html"
-  to = "/proximamente.html"
+  to = "/index.html"
   status = 200
   force = true
 
 [[redirects]]
   from = "/pages/*"
-  to = "/proximamente.html"
+  to = "/index.html"
   status = 200
   force = true
 
