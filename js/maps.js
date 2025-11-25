@@ -161,7 +161,7 @@ function openInMaps(app) {
   const coords = CONFIG.evento.coordenadas;
   let url;
 
-  switch(app) {
+  switch (app) {
     case 'google':
       url = `https://www.google.com/maps/dir/?api=1&destination=${coords.lat},${coords.lng}`;
       break;
