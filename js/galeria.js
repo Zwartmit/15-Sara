@@ -9,7 +9,7 @@ const CLOUDINARY_FETCH_URL = `https://res.cloudinary.com/${CONFIG.cloudinary.clo
 // Inicializar galería
 function initGallery() {
   document.getElementById('upload-btn').disabled = false;
-  loadGalleryFromLocalStorage();
+  loadGalleryFromCloudinary();
 }
 
 // Subir archivos (solo imágenes)
@@ -72,6 +72,8 @@ async function uploadFilesToCloudinary(files) {
       formData.append('file', file);
       formData.append('upload_preset', CONFIG.cloudinary.uploadPreset);
       formData.append('folder', CONFIG.cloudinary.folder);
+      formData.append('tags', 'sara_15_gallery'); // Tag para agrupar fotos
+      formData.append('context', `original_name=${file.name}`); // Guardar nombre original
 
       const response = await fetch(CLOUDINARY_URL, {
         method: 'POST',
@@ -81,20 +83,6 @@ async function uploadFilesToCloudinary(files) {
       if (response.ok) {
         const data = await response.json();
         uploaded++;
-
-        // Guardar info del archivo
-        const fileInfo = {
-          id: data.public_id,
-          url: data.secure_url,
-          thumbnail: data.thumbnail_url || data.secure_url,
-          type: data.resource_type,
-          name: file.name,
-          uploadedAt: new Date().toISOString()
-        };
-
-        uploadedFiles.push(fileInfo);
-        saveGalleryToLocalStorage();
-
         uploadStatus.innerHTML = `<p class="success">✅ Subiendo... ${uploaded}/${files.length}</p>`;
       } else {
         failed++;
@@ -109,10 +97,11 @@ async function uploadFilesToCloudinary(files) {
   setTimeout(() => {
     if (failed === 0) {
       uploadStatus.innerHTML = `<p class="success">🎉 ¡${uploaded} archivo(s) subido(s) exitosamente!</p>`;
-      displayGalleryPreview(uploadedFiles);
+      // Recargar la galería desde el servidor para ver las nuevas fotos
+      setTimeout(loadGalleryFromCloudinary, 1000);
     } else {
       uploadStatus.innerHTML = `<p class="error">⚠️ ${uploaded} subido(s), ${failed} fallido(s)</p>`;
-      displayGalleryPreview(uploadedFiles);
+      setTimeout(loadGalleryFromCloudinary, 1000);
     }
   }, 500);
 }
@@ -123,48 +112,56 @@ function viewGallery() {
   window.open(cloudinaryUrl, '_blank');
 }
 
-// Guardar galería en localStorage
-function saveGalleryToLocalStorage() {
-  localStorage.setItem('sara15_gallery', JSON.stringify(uploadedFiles));
-}
+// Cargar galería desde Cloudinary (Lista JSON)
+async function loadGalleryFromCloudinary() {
+  const galleryGrid = document.getElementById('gallery-grid');
 
-// Cargar galería desde localStorage
-async function loadGalleryFromLocalStorage() {
-  const saved = localStorage.getItem('sara15_gallery');
-  if (saved) {
-    uploadedFiles = JSON.parse(saved);
+  try {
+    // URL de la lista de recursos (JSON)
+    // Se agrega un timestamp para evitar caché
+    const listUrl = `https://res.cloudinary.com/${CONFIG.cloudinary.cloudName}/image/list/sara_15_gallery.json?t=${new Date().getTime()}`;
 
-    // Mostrar inmediatamente las fotos guardadas
-    // La detección de imágenes rotas se hará automáticamente con onerror
-    displayGalleryPreview(uploadedFiles);
+    const response = await fetch(listUrl);
 
-    // Validación adicional en segundo plano para limpiar archivos huérfanos
-    setTimeout(async () => {
-      let hasChanges = false;
-      const validFiles = [];
+    if (response.ok) {
+      const data = await response.json();
 
-      for (const file of uploadedFiles) {
-        const exists = await checkIfImageExists(file.url);
-        if (exists) {
-          validFiles.push(file);
-        } else {
-          hasChanges = true;
-          console.log('Foto eliminada en validación:', file.name);
-        }
-      }
+      // Mapear los recursos al formato de nuestra aplicación
+      uploadedFiles = data.resources.map(resource => {
+        return {
+          id: resource.public_id,
+          // Construir URL segura
+          url: `https://res.cloudinary.com/${CONFIG.cloudinary.cloudName}/image/upload/v${resource.version}/${resource.public_id}.${resource.format}`,
+          thumbnail: `https://res.cloudinary.com/${CONFIG.cloudinary.cloudName}/image/upload/c_thumb,w_200,g_face/v${resource.version}/${resource.public_id}.${resource.format}`,
+          type: resource.type,
+          name: resource.context?.custom?.original_name || `Foto ${resource.public_id}`,
+          uploadedAt: resource.created_at
+        };
+      });
 
-      // Si algunas fotos fueron eliminadas, actualizar
-      if (hasChanges && validFiles.length !== uploadedFiles.length) {
-        uploadedFiles = validFiles;
-        saveGalleryToLocalStorage();
+      // Ordenar por fecha (más recientes primero)
+      uploadedFiles.sort((a, b) => {
+        return new Date(b.uploadedAt) - new Date(a.uploadedAt);
+      });
+
+      displayGalleryPreview(uploadedFiles);
+    } else {
+      // Si falla (ej. 404 porque no hay lista aún o permisos restringidos), mostrar vacío o error silencioso
+      console.log('No se pudo cargar la lista de imágenes (puede que esté vacía o restringida).');
+      uploadedFiles = [];
+      displayGalleryPreview([]);
+
+      // Intentar cargar de localStorage como respaldo temporal si falla Cloudinary
+      const saved = localStorage.getItem('sara15_gallery');
+      if (saved) {
+        console.log('Cargando respaldo local...');
+        uploadedFiles = JSON.parse(saved);
         displayGalleryPreview(uploadedFiles);
-
-        const removed = uploadedFiles.length - validFiles.length;
-        if (removed > 0) {
-          showNotification(`${removed} foto${removed > 1 ? 's' : ''} no disponible${removed > 1 ? 's' : ''} eliminada${removed > 1 ? 's' : ''}`, 'info');
-        }
       }
-    }, 2000);
+    }
+  } catch (error) {
+    console.error('Error cargando galería:', error);
+    displayGalleryPreview([]);
   }
 }
 
@@ -268,7 +265,7 @@ function handleBrokenImage(fileId, imgElement) {
   const index = uploadedFiles.findIndex(f => f.id === fileId);
   if (index !== -1) {
     uploadedFiles.splice(index, 1);
-    saveGalleryToLocalStorage();
+    // saveGalleryToLocalStorage(); // Eliminado porque ya no usamos localStorage
 
     // Ocultar el elemento roto inmediatamente con animación
     const galleryItem = imgElement.closest('.gallery-item');
