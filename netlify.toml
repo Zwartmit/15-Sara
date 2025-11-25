@@ -5,25 +5,25 @@
   publish = "."
 
 # Redirigir todas las rutas HTML a proximamente.html
-#[[redirects]]
-#  from = "/"
-#  to = "/proximamente.html"
-#  status = 200
-#  force = true
-#
-#[[redirects]]
-#  from = "/index.html"
-#  to = "/proximamente.html"
-#  status = 200
-#  force = true
-#
-#[[redirects]]
-#  from = "/pages/*"
-#  to = "/proximamente.html"
-#  status = 200
-#  force = true
+[[redirects]]
+  from = "/"
+  to = "/proximamente.html"
+  status = 200
+  force = true
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/index.html"
+  to = "/proximamente.html"
   status = 200
+  force = true
+
+[[redirects]]
+  from = "/pages/*"
+  to = "/proximamente.html"
+  status = 200
+  force = true
+
+#[[redirects]]
+#  from = "/*"
+#  to = "/index.html"
+#  status = 200
