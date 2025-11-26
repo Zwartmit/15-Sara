@@ -41,6 +41,8 @@
     .timeline {
       position: relative;
       padding: 20px 0;
+      max-width: 1000px;
+      margin: 0 auto;
     }
     
     .timeline::before {
@@ -56,29 +58,47 @@
     
     .timeline-item {
       position: relative;
-      margin-bottom: 50px;
+      margin-bottom: 100px;
       display: flex;
       align-items: center;
-      gap: 30px;
+      justify-content: center;
+      padding: 0 20px;
     }
     
+    /* Items impares: TODO a la izquierda de la línea (texto + emoji) */
     .timeline-item:nth-child(odd) {
-      flex-direction: row;
+      justify-content: flex-end;
+      padding-right: calc(50% + 2px);
     }
     
+    .timeline-item:nth-child(odd) .timeline-content {
+      text-align: right;
+      order: 1;
+      margin-right: 15px;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-icon {
+      order: 2;
+    }
+    
+    /* Items pares: TODO a la derecha de la línea (emoji + texto) */
     .timeline-item:nth-child(even) {
-      flex-direction: row-reverse;
+      justify-content: flex-start;
+      padding-left: calc(50% + 2px);
+    }
+    
+    .timeline-item:nth-child(even) .timeline-content {
+      text-align: left;
+      order: 2;
+      margin-left: 15px;
+    }
+    
+    .timeline-item:nth-child(even) .timeline-icon {
+      order: 1;
     }
     
     .timeline-content {
-      flex: 1;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 25px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      position: relative;
-      animation: fadeIn 0.6s ease-out;
+      max-width: 400px;
     }
     
     .timeline-icon {
@@ -104,7 +124,7 @@
     }
     
     .timeline-title {
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 600;
       margin-bottom: 8px;
     }
@@ -115,14 +135,44 @@
     }
     
     @media (max-width: 768px) {
+      .timeline {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      
       .timeline::before {
-        left: 40px;
+        left: 30px;
       }
       
       .timeline-item,
+      .timeline-item:nth-child(odd),
       .timeline-item:nth-child(even) {
+        display: flex !important;
         flex-direction: row !important;
+        grid-template-areas: none !important;
+        grid-template-columns: none !important;
         padding-left: 0;
+        padding-right: 0;
+        justify-content: flex-start !important;
+        gap: 0;
+        margin-bottom: 60px;
+      }
+      
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content {
+        text-align: left !important;
+        margin: 0 0 0 15px !important;
+        flex: 1;
+        padding: 10px 15px 10px 5px;
+        max-width: none;
+      }
+      
+      .timeline-item:nth-child(odd) .timeline-icon,
+      .timeline-item:nth-child(even) .timeline-icon {
+        transform: none !important;
+        order: -1;
+        flex-shrink: 0;
+        margin-left: 0;
       }
       
       .timeline-icon {
@@ -132,7 +182,7 @@
       }
       
       .timeline-content {
-        margin-left: 20px;
+        margin-left: 0;
       }
     }
     
@@ -165,17 +215,14 @@
   <!-- Contenido Principal -->
   <section class="container section-padding">
     <div class="fade-in text-center mb-8">
-      <h1 class="text-3xl md:text-5xl font-bold mb-4" style="color: var(--gold);">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--gold);">
         📝 Itinerario del Evento
       </h1>
-      <p class="text-lg opacity-90">
-        Conoce el cronograma completo. ¡No te pierdas ningún momento especial!
-      </p>
     </div>
 
     <!-- Información General -->
     <div class="glass p-8 mb-8 text-center">
-      <h2 class="text-3xl font-bold mb-4" style="color: #9b59b6;">📍 Detalles del evento</h2>
+      <h2 class="text-2xl font-bold mb-4" style="color: #9b59b6;">📍 Detalles del evento</h2>
       <div class="event-details-flex">
         <p class="text-lg"><strong>📅 Fecha y hora:</strong> <span id="event-date"></span> <span id="event-time"></span></p>
         <p class="text-lg"><strong>🏰 Lugar:</strong> <span id="event-place"></span></p>
@@ -184,7 +231,7 @@
 
     <!-- Timeline del Itinerario -->
     <div class="glass p-8 mb-8">
-      <h2 class="text-3xl font-bold mb-8 text-center" style="color: #9b59b6;">⏱️ Cronograma</h2>
+      <h2 class="text-2xl font-bold mb-8 text-center" style="color: #9b59b6;">⏱️ Protocolo</h2>
       
       <div class="timeline" id="timeline-container">
         <!-- Se llenará dinámicamente -->
@@ -193,13 +240,13 @@
 
     <!-- Consejos y Recomendaciones -->
     <div class="glass p-8">
-      <h2 class="text-3xl font-bold mb-6 text-center" style="color: #9b59b6;">💡 Consejos para disfrutar al máximo</h2>
+      <h2 class="text-2xl font-bold mb-6 text-center" style="color: #9b59b6;">💡 Consejos para disfrutar al máximo</h2>
       
       <div class="tips-grid">
         <div class="tip-card">
           <span class="tip-icon">⏰</span>
           <h3 class="font-bold mb-2">Puntualidad</h3>
-          <p class="text-sm opacity-90">Llega 15-20 minutos antes</p>
+          <p class="text-sm opacity-90">Llega a tiempo para no perderte la entrada de la quinceañera</p>
         </div>
         
         <div class="tip-card">
@@ -241,32 +288,14 @@
     function generateTimeline() {
       const container = document.getElementById('timeline-container');
       
-      container.innerHTML = CONFIG.itinerario.map(item => `
-        <div class="timeline-item fade-in">
+      container.innerHTML = CONFIG.itinerario.map((item, index) => `
+        <div class="timeline-item fade-in" style="animation-delay: ${index * 0.1}s">
           <div class="timeline-content">
-            <div class="timeline-time">${item.hora}</div>
             <div class="timeline-title">${item.actividad}</div>
-            <div class="timeline-description">
-              ${getActivityDescription(item.actividad)}
-            </div>
           </div>
           <div class="timeline-icon">${item.icono}</div>
         </div>
       `).join('');
-    }
-
-    // Descripción de cada actividad
-    function getActivityDescription(actividad) {
-      const descriptions = {
-        'Recepción de invitados': 'Llegada de los invitados. Cóctel de bienvenida y ambiente festivo.',
-        'Ceremonia de entrada': 'Gran entrada de Sara. Momento especial de presentación.',
-        'Vals de la quinceañera': 'El tradicional vals con los padres y padrinos.',
-        'Cena': 'Deliciosa cena para todos los invitados. ¡Buen provecho!',
-        'Baile y diversión': 'Música en vivo, DJ, y mucha diversión en la pista de baile.',
-        'Cierre del evento': 'Despedida y agradecimiento a todos los invitados.'
-      };
-      
-      return descriptions[actividad] || 'Un momento especial del evento.';
     }
 
     // Inicializar

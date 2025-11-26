@@ -61,6 +61,21 @@ function initMap(position) {
             title: CONFIG.evento.lugar,
           });
 
+          // Obtener información de la ruta
+          const route = response.routes[0].legs[0];
+
+          // Crear InfoWindow con información de la ruta
+          const infoWindow = new google.maps.InfoWindow({
+            content: `
+              <div style="color: #333; max-width: 200px;">
+                <h3 style="margin:0 0 10px 0; color: #d63384; font-size: 16px;">📍 Información de la ruta</h3>
+                <p style="margin: 5px 0; font-size: 14px;"><strong>Distancia:</strong> ${route.distance.text}</p>
+                <p style="margin: 5px 0; font-size: 14px;"><strong>Tiempo:</strong> ${route.duration.text}</p>
+                <p style="margin: 5px 0; font-size: 14px;"><strong>Destino:</strong> ${CONFIG.evento.lugar}</p>
+              </div>
+            `
+          });
+
           // Marcador del origen (carruaje)
           carruaje = new google.maps.Marker({
             position: origen,
@@ -70,6 +85,14 @@ function initMap(position) {
               scaledSize: new google.maps.Size(50, 50),
             },
             title: "Tu ubicación",
+          });
+
+          // Abrir InfoWindow automáticamente sobre el carruaje
+          infoWindow.open(map, carruaje);
+
+          // También permitir abrir al hacer clic en el carruaje
+          carruaje.addListener('click', () => {
+            infoWindow.open(map, carruaje);
           });
 
           // Actualizar posición en tiempo real
@@ -82,16 +105,6 @@ function initMap(position) {
             map.setCenter(nuevaPos);
           });
 
-          // Mostrar información de la ruta
-          const route = response.routes[0].legs[0];
-          document.getElementById('route-info').innerHTML = `
-            <div class="glass" style="padding: 20px; margin: 20px 0;">
-              <h3>📍 Información de la Ruta</h3>
-              <p><strong>Distancia:</strong> ${route.distance.text}</p>
-              <p><strong>Tiempo estimado:</strong> ${route.duration.text}</p>
-              <p><strong>Destino:</strong> ${CONFIG.evento.lugar}</p>
-            </div>
-          `;
         } else {
           console.error("Error calculando ruta:", status);
           showSimpleMap(destino);

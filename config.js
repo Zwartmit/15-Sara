@@ -42,12 +42,20 @@ const CONFIG = {
 
   // Itinerario del evento
   itinerario: [
-    { hora: "04:00 pm", actividad: "Recepción de invitados", icono: "🎉" },
-    { hora: "04:30 pm", actividad: "Ceremonia de entrada", icono: "👑" },
-    { hora: "05:00 pm", actividad: "Vals de la quinceañera", icono: "💃" },
-    { hora: "05:30 pm", actividad: "Cena", icono: "🍽️" },
-    { hora: "06:30 pm", actividad: "Baile y diversión", icono: "🎵" },
-    { hora: "09:00 pm", actividad: "Cierre del evento", icono: "✨" }
+    { actividad: "Entrada de la quinceañera", icono: "👸" },
+    { actividad: "Cambio de zapatillas", icono: "👠" },
+    { actividad: "Entrega del anillo", icono: "💍" },
+    { actividad: "Entrega de accesorios", icono: "👑" },
+    { actividad: "Entrega del peluche de la quinceañera a familiar menor", icono: "🧸" },
+    { actividad: "Vals", icono: "💃" },
+    { actividad: "Happy birthday", icono: "🎂" },
+    { actividad: "Brindis", icono: "🥂" },
+    { actividad: "Palabras padre y madre", icono: "🗣️" },
+    { actividad: "Palabras de bienvenida por parte la quinceañera", icono: "🎤" },
+    { actividad: "Registro fotográfico", icono: "📸" },
+    { actividad: "Cena", icono: "🍽️" },
+    { actividad: "Ponqué", icono: "🍰" },
+    { actividad: "Rumba", icono: "🎵" }
   ],
 
   // Temas y colores
