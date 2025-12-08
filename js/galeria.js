@@ -203,7 +203,7 @@ function displayGalleryPreview(files) {
   if (!galleryGrid) return;
 
   if (files.length === 0) {
-    galleryGrid.innerHTML = '<p style="text-align:center; padding: 40px; grid-column: 1 / -1;">No hay fotos aún. ¡Sé el primero en compartir! 📸</p>';
+    galleryGrid.innerHTML = '<p style="text-align:center; padding: 40px; grid-column: 1 / -1;">No hay fotos aún. ¡Sé el(la) primero(a) en compartir! 📸</p>';
     galleryPagination.innerHTML = '';
     if (downloadAllBtn) downloadAllBtn.style.display = 'none';
     return;

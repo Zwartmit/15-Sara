@@ -96,14 +96,24 @@ function initMap(position) {
           });
 
           // Actualizar posición en tiempo real
+          // Actualizar posición en tiempo real con alta precisión
+          const watchOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+          };
+
           navigator.geolocation.watchPosition((pos) => {
             const nuevaPos = {
               lat: pos.coords.latitude,
               lng: pos.coords.longitude,
             };
             carruaje.setPosition(nuevaPos);
-            map.setCenter(nuevaPos);
-          });
+            // Opcional: Centrar mapa si el usuario se mueve mucho
+            // map.setCenter(nuevaPos);
+          }, (error) => {
+            console.error("Error watching position:", error);
+          }, watchOptions);
 
         } else {
           console.error("Error calculando ruta:", status);
@@ -154,14 +164,22 @@ function showSimpleMap(destino) {
 // Obtener ubicación del usuario
 function getMyLocation() {
   if (navigator.geolocation) {
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0
+    };
+
     navigator.geolocation.getCurrentPosition(
       (position) => {
         initMap(position);
       },
-      () => {
-        alert("No se pudo obtener tu ubicación. Mostrando solo el destino.");
+      (error) => {
+        console.warn("Error obteniendo ubicación:", error);
+        alert("No se pudo obtener tu ubicación precisa. Mostrando solo el destino.");
         initMap(null);
-      }
+      },
+      options
     );
   } else {
     alert("Tu navegador no soporta geolocalización.");
@@ -173,13 +191,25 @@ function getMyLocation() {
 function openInMaps(app) {
   const coords = CONFIG.evento.coordenadas;
   let url;
+  let origin = null;
+
+  // Intentar obtener la ubicación actual del usuario desde el marcador 'carruaje'
+  if (typeof carruaje !== 'undefined' && carruaje && carruaje.getPosition()) {
+    const pos = carruaje.getPosition();
+    origin = { lat: pos.lat(), lng: pos.lng() };
+  }
 
   switch (app) {
     case 'google':
-      url = `https://www.google.com/maps/dir/?api=1&destination=${coords.lat},${coords.lng}`;
+      if (origin) {
+        url = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${coords.lat},${coords.lng}`;
+      } else {
+        url = `https://www.google.com/maps/dir/?api=1&destination=${coords.lat},${coords.lng}`;
+      }
       break;
     case 'waze':
-      url = `https://www.waze.com/ul?ll=${coords.lat},${coords.lng}&navigate=yes`;
+      // Waze siempre usa GPS actual para navegar al destino
+      url = `https://www.waze.com/ul?ll=${coords.lat},${coords.lng}&navigate=yes&zoom=17`;
       break;
     default:
       url = `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}`;

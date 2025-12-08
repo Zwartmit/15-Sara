@@ -1,29 +1,7 @@
-# Configuración de Netlify para mostrar página "Próximamente"
-# Mientras el sitio está en construcción
-
 [build]
   publish = "."
 
-# Redirigir todas las rutas HTML a proximamente.html
 [[redirects]]
-  from = "/"
-  to = "/proximamente.html"
+  from = "/*"
+  to = "/index.html"
   status = 200
-  force = true
-
-[[redirects]]
-  from = "/index.html"
-  to = "/proximamente.html"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/pages/*"
-  to = "/proximamente.html"
-  status = 200
-  force = true
-
-#[[redirects]]
-#  from = "/*"
-#  to = "/index.html"
-#  status = 200

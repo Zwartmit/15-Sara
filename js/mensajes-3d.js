@@ -281,7 +281,7 @@ function update3DBoard() {
   
   // Si no hay mensajes, no hacer nada
   if (!messages || messages.length === 0) {
-    console.log('No hay mensajes para mostrar en 3D');
+    console.log('Aún no hay mensajes.');
     return;
   }
   
