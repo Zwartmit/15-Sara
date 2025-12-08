@@ -137,7 +137,7 @@ Resumen:
 
 - Mapa interactivo con Google Maps
 - Navegación en tiempo real desde la ubicación del usuario
-- Botones para abrir en Google Maps / Waze
+- Botones para abrir en Google Maps
 - Información de distancia y tiempo estimado
 
 ### Galería (pages/galeria.html)

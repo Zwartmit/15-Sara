@@ -176,7 +176,6 @@ function getMyLocation() {
       },
       (error) => {
         console.warn("Error obteniendo ubicación:", error);
-        alert("No se pudo obtener tu ubicación precisa. Mostrando solo el destino.");
         initMap(null);
       },
       options
@@ -187,35 +186,89 @@ function getMyLocation() {
   }
 }
 
-// Abrir en app de navegación
+// Abrir en app de navegación con ubicación GPS fresca
 function openInMaps(app) {
   const coords = CONFIG.evento.coordenadas;
-  let url;
-  let origin = null;
 
-  // Intentar obtener la ubicación actual del usuario desde el marcador 'carruaje'
-  if (typeof carruaje !== 'undefined' && carruaje && carruaje.getPosition()) {
-    const pos = carruaje.getPosition();
-    origin = { lat: pos.lat(), lng: pos.lng() };
-  }
+  // Obtener ubicación GPS FRESCA en tiempo real antes de abrir
+  if (navigator.geolocation) {
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0  // No usar caché, forzar lectura GPS nueva
+    };
 
-  switch (app) {
-    case 'google':
-      if (origin) {
-        url = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${coords.lat},${coords.lng}`;
-      } else {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // Ubicación GPS fresca obtenida
+        const origin = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        let url;
+        switch (app) {
+          case 'google':
+            url = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${coords.lat},${coords.lng}`;
+            break;
+          case 'waze':
+            // Waze usa GPS del dispositivo, pero incluimos destino preciso
+            url = `https://www.waze.com/ul?ll=${coords.lat},${coords.lng}&navigate=yes&zoom=17`;
+            break;
+          default:
+            url = `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}`;
+        }
+
+        window.open(url, '_blank');
+      },
+      (error) => {
+        // Si falla obtener ubicación fresca, usar fallback
+        console.warn("No se pudo obtener ubicación GPS fresca:", error);
+
+        let url;
+        let origin = null;
+
+        // Intentar usar la última posición conocida del marcador
+        if (typeof carruaje !== 'undefined' && carruaje && carruaje.getPosition()) {
+          const pos = carruaje.getPosition();
+          origin = { lat: pos.lat(), lng: pos.lng() };
+        }
+
+        switch (app) {
+          case 'google':
+            if (origin) {
+              url = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${coords.lat},${coords.lng}`;
+            } else {
+              url = `https://www.google.com/maps/dir/?api=1&destination=${coords.lat},${coords.lng}`;
+            }
+            break;
+          case 'waze':
+            url = `https://www.waze.com/ul?ll=${coords.lat},${coords.lng}&navigate=yes&zoom=17`;
+            break;
+          default:
+            url = `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}`;
+        }
+
+        window.open(url, '_blank');
+      },
+      options
+    );
+  } else {
+    // Navegador no soporta geolocalización, abrir solo con destino
+    let url;
+    switch (app) {
+      case 'google':
         url = `https://www.google.com/maps/dir/?api=1&destination=${coords.lat},${coords.lng}`;
-      }
-      break;
-    case 'waze':
-      // Waze siempre usa GPS actual para navegar al destino
-      url = `https://www.waze.com/ul?ll=${coords.lat},${coords.lng}&navigate=yes&zoom=17`;
-      break;
-    default:
-      url = `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}`;
-  }
+        break;
+      case 'waze':
+        url = `https://www.waze.com/ul?ll=${coords.lat},${coords.lng}&navigate=yes&zoom=17`;
+        break;
+      default:
+        url = `https://www.google.com/maps/search/?api=1&query=${coords.lat},${coords.lng}`;
+    }
 
-  window.open(url, '_blank');
+    window.open(url, '_blank');
+  }
 }
 
 // Formatear fecha

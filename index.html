@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>15 Años de Sara Valeria 👑</title>
   <link rel="icon" href="/assets/images/rapunzel.png">
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700;900&family=Dancing+Script:wght@400;700&display=swap"
+    rel="stylesheet">
+
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
   <!-- Custom Styles -->
   <link rel="stylesheet" href="css/styles.css">
-  
+
   <!-- Config -->
   <script src="config.js"></script>
-  
+
   <!-- Navbar Script -->
   <script src="js/navbar.js"></script>
 </head>
+
 <body>
   <!-- Navbar Container -->
   <div id="navbar-container"></div>
@@ -33,15 +37,23 @@
       <p class="text-xl md:text-2xl mb-3" style="color: var(--purple-dark); font-weight: 600;">
         ✨ Una aventura mágica que recordaremos para siempre ✨
       </p>
-    <!-- Contador Regresivo -->
-    <div id="countdown" class="countdown"></div>
+      <!-- Contador Regresivo -->
+      <div id="countdown" class="countdown"></div>
+    </div>
+
+    <!-- Texto de Bienvenida -->
+    <div class="fade-in" style="margin-top: 30px; margin-bottom: 20px; text-align: center;">
+      <p style="font-size: 1.1rem; color: var(--purple-dark); max-width: 600px; margin: 0 auto; line-height: 1.6;">
+        Pulsa en los botones de abajo para navegar por la página
+      </p>
     </div>
 
     <!-- Navegación Principal -->
     <div class="grid grid-2" style="margin-top: 40px;">
       <!-- Card Mapa -->
       <a href="pages/mapa.html" class="card" style="text-decoration: none; color: white;">
-        <span class="card-icon float"><img src="./assets/images/mapa.png" alt="Mapa" style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
+        <span class="card-icon float"><img src="./assets/images/mapa.png" alt="Mapa"
+            style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
         <h2 class="card-title">Cómo llegar</h2>
         <p class="card-description">
           Encuentra la ruta más rápida al castillo
@@ -50,7 +62,8 @@
 
       <!-- Card Galería -->
       <a href="pages/galeria.html" class="card" style="text-decoration: none; color: white;">
-        <span class="card-icon float"><img src="./assets/images/galeria.png" alt="Galería" style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
+        <span class="card-icon float"><img src="./assets/images/galeria.png" alt="Galería"
+            style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
         <h2 class="card-title">Galería de recuerdos</h2>
         <p class="card-description">
           Comparte las fotos que captures
@@ -59,7 +72,8 @@
 
       <!-- Card Mensajes -->
       <a href="pages/mensajes.html" class="card" style="text-decoration: none; color: white;">
-        <span class="card-icon float"><img src="./assets/images/mensajes.png" alt="Mensajes" style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
+        <span class="card-icon float"><img src="./assets/images/mensajes.png" alt="Mensajes"
+            style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
         <h2 class="card-title">Mensajes para Sara</h2>
         <p class="card-description">
           Envía tus mejores deseos
@@ -68,7 +82,8 @@
 
       <!-- Card Itinerario -->
       <a href="pages/itinerario.html" class="card" style="text-decoration: none; color: white;">
-        <span class="card-icon float"><img src="./assets/images/itinerario.png" alt="Itinerario" style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
+        <span class="card-icon float"><img src="./assets/images/itinerario.png" alt="Itinerario"
+            style="width: 90px; height: auto; display: block; margin: 0 auto;"></span>
         <h2 class="card-title">Itinerario del evento</h2>
         <p class="card-description">
           Conoce el cronograma del evento
@@ -92,4 +107,5 @@
     document.getElementById('event-address').textContent = CONFIG.evento.direccion;
   </script>
 </body>
+
 </html>
