@@ -176,12 +176,13 @@ function getMyLocation() {
       },
       (error) => {
         console.warn("Error obteniendo ubicación:", error);
+        // Mostrar solo el destino sin alerta invasiva
         initMap(null);
       },
       options
     );
   } else {
-    alert("Tu navegador no soporta geolocalización.");
+    console.warn("Tu navegador no soporta geolocalización.");
     initMap(null);
   }
 }
