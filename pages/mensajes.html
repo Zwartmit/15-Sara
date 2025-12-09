@@ -338,11 +338,11 @@
             class="form-textarea" 
             placeholder="Escribe aquí tus mejores deseos para Sara en este día tan especial..."
             required
-            maxlength="500"
+            maxlength="200"
             oninput="updateCharCounter()"
           ></textarea>
           <div class="char-counter">
-            <span id="char-count">0</span> / 500 caracteres
+            <span id="char-count">0</span> / 200 caracteres
           </div>
         </div>
         
@@ -369,6 +369,7 @@
           
           <!-- Botones de Zoom -->
           <div class="zoom-controls">
+            <button id="fullscreen-btn" class="zoom-btn" title="Pantalla Completa">⛶</button>
             <button id="zoom-in-btn" class="zoom-btn" title="Acercar">➕</button>
             <button id="zoom-out-btn" class="zoom-btn" title="Alejar">➖</button>
           </div>
