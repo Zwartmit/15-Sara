@@ -29,14 +29,14 @@ async function initMessages() {
     console.error('No se pudo inicializar Firebase');
     return;
   }
-  
+
   // Escuchar cambios en tiempo real
   messagesRef.on('value', (snapshot) => {
     const data = snapshot.val();
     if (data) {
       messages = Object.values(data).sort((a, b) => b.id - a.id);
       console.log('📨 Mensajes actualizados desde Firebase:', messages.length);
-      
+
       if (typeof displayMessages === 'function') {
         displayMessages();
       }
@@ -53,7 +53,7 @@ async function saveMessageToFirebase(message) {
     if (!messagesRef) {
       throw new Error('Firebase no está inicializado');
     }
-    
+
     // Usar el ID del mensaje como clave
     await messagesRef.child(message.id.toString()).set(message);
     console.log('✅ Mensaje guardado en Firebase');
@@ -64,30 +64,35 @@ async function saveMessageToFirebase(message) {
   }
 }
 
-// Contador de caracteres
+// Contador de caracteres y auto-resize
 function updateCharCounter() {
-  const content = document.getElementById('message-content').value;
+  const textarea = document.getElementById('message-content');
+  const content = textarea.value;
   document.getElementById('char-count').textContent = content.length;
+
+  // Auto-resize
+  textarea.style.height = 'auto';
+  textarea.style.height = (textarea.scrollHeight) + 'px';
 }
 
 // Enviar mensaje
 async function submitMessage(event) {
   event.preventDefault();
-  
+
   const author = document.getElementById('author-name').value.trim();
   const content = document.getElementById('message-content').value.trim();
-  
+
   if (!author || !content) {
     showNotification('Por favor completa todos los campos', 'error');
     return;
   }
-  
+
   // Deshabilitar botón mientras se envía
   const submitBtn = event.target.querySelector('button[type="submit"]');
   const originalText = submitBtn.innerHTML;
   submitBtn.disabled = true;
   submitBtn.innerHTML = '⏳ Enviando...';
-  
+
   const message = {
     id: Date.now(),
     author: author,
@@ -95,22 +100,22 @@ async function submitMessage(event) {
     date: new Date().toISOString(),
     avatar: getRandomEmoji()
   };
-  
+
   // Guardar en Firebase
   const saved = await saveMessageToFirebase(message);
-  
+
   if (saved) {
     // Limpiar formulario
     document.getElementById('message-form').reset();
     updateCharCounter();
-    
+
     showNotification('¡Mensaje enviado con éxito! 💌', 'success');
-    
+
     // Los mensajes se actualizarán automáticamente por el listener de Firebase
   } else {
     showNotification('Error al enviar el mensaje. Intenta de nuevo.', 'error');
   }
-  
+
   // Rehabilitar botón
   submitBtn.disabled = false;
   submitBtn.innerHTML = originalText;
@@ -137,12 +142,12 @@ function formatDate(dateString) {
   const minutes = Math.floor(diff / 60000);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
-  
+
   if (minutes < 1) return 'Ahora mismo';
   if (minutes < 60) return `Hace ${minutes} min`;
   if (hours < 24) return `Hace ${hours} hora${hours > 1 ? 's' : ''}`;
   if (days < 7) return `Hace ${days} día${days > 1 ? 's' : ''}`;
-  
+
   return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
