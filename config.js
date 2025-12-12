@@ -6,8 +6,8 @@ const CONFIG = {
   // Información del evento
   evento: {
     nombre: "Sara",
-    fecha: "2025-12-13", // Formato: YYYY-MM-DD
-    hora: "04:00 pm",
+    fecha: "2025-12-11", // Formato: YYYY-MM-DD
+    hora: "07:22 pm",
     lugar: "Salón de eventos La Ceibita",
     coordenadas: {
       lat: 5.7008645,
