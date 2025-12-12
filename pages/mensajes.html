@@ -1,37 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mensajes para Sara</title>
   <link rel="icon" href="../assets/images/rapunzel.png">
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&family=Indie+Flower&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@400;700&family=Indie+Flower&display=swap"
+    rel="stylesheet">
+
   <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  
+
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  
+
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  
+
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-  
+
   <!-- Styles -->
   <link rel="stylesheet" href="../css/styles.css">
-  
+
   <!-- Config -->
   <script src="../config.js"></script>
-  
+
   <!-- Navbar Script -->
   <script src="../js/navbar.js"></script>
-  
+
   <style>
     /* Layout de dos columnas */
     .messages-layout {
@@ -63,24 +66,24 @@
       background: linear-gradient(135deg, rgba(20, 20, 40, 0.9), rgba(40, 20, 60, 0.9));
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
-    
+
     /* En desktop, hacer el canvas más alto */
     @media (min-width: 1024px) {
       #canvas-container {
         height: 700px;
       }
     }
-    
+
     #messages-canvas {
       width: 100%;
       height: 100%;
       cursor: grab;
     }
-    
+
     #messages-canvas:active {
       cursor: grabbing;
     }
-    
+
     /* Post-it Cards (fallback 2D) */
     .postit-board {
       position: relative;
@@ -91,7 +94,7 @@
       background: linear-gradient(135deg, rgba(20, 20, 40, 0.3), rgba(40, 20, 60, 0.3));
       border-radius: 15px;
     }
-    
+
     .message-card {
       background: linear-gradient(135deg, #ffd54f 0%, #ffecb3 100%);
       border-radius: 5px;
@@ -107,36 +110,36 @@
       user-select: none;
       z-index: 1;
     }
-    
+
     .message-card.dragging {
       cursor: grabbing;
       z-index: 1000;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
       transform: scale(1.05);
     }
-    
+
     .message-card:nth-child(2n) {
       background: linear-gradient(135deg, #ff8a80 0%, #ffccbc 100%);
     }
-    
+
     .message-card:nth-child(3n) {
       background: linear-gradient(135deg, #80deea 0%, #b2ebf2 100%);
     }
-    
+
     .message-card:nth-child(4n) {
       background: linear-gradient(135deg, #ce93d8 0%, #e1bee7 100%);
     }
-    
+
     .message-card:nth-child(5n) {
       background: linear-gradient(135deg, #a5d6a7 0%, #c8e6c9 100%);
     }
-    
+
     .message-card:hover {
       transform: translateY(-10px) rotateZ(2deg);
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
       z-index: 10;
     }
-    
+
     .message-card::before {
       content: '📌';
       position: absolute;
@@ -146,14 +149,14 @@
       font-size: 2rem;
       filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
-    
+
     .message-header {
       display: flex;
       align-items: center;
       margin-bottom: 15px;
       gap: 10px;
     }
-    
+
     .message-avatar {
       width: 35px;
       height: 35px;
@@ -166,39 +169,40 @@
       flex-shrink: 0;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
-    
+
     .message-author {
       font-weight: 700;
       font-size: 0.9rem;
       color: #333;
       text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
     }
-    
+
     .message-date {
       font-size: 0.7rem;
       opacity: 0.7;
       color: #555;
     }
-    
+
     .message-content {
       line-height: 1.5;
       color: #333;
       font-size: 0.85rem;
-      font-family: 'Indie Flower', cursive;
+      font-family: 'Poppins', sans-serif;
     }
-    
+
     .form-group {
       margin-bottom: 20px;
     }
-    
+
     .form-label {
       display: block;
       margin-bottom: 8px;
       font-weight: 600;
       color: #9b59b6;
     }
-    
-    .form-input, .form-textarea {
+
+    .form-input,
+    .form-textarea {
       width: 100%;
       padding: 12px 16px;
       border-radius: 10px;
@@ -209,51 +213,53 @@
       font-size: 1rem;
       transition: all 0.3s ease;
     }
-    
-    .form-input:focus, .form-textarea:focus {
+
+    .form-input:focus,
+    .form-textarea:focus {
       outline: none;
       border-color: var(--accent);
       background: rgba(255, 255, 255, 1);
     }
-    
-    .form-input::placeholder, .form-textarea::placeholder {
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
       color: rgb(178, 178, 178);
     }
-    
+
     .form-textarea {
       resize: vertical;
       min-height: 120px;
     }
-    
+
     .char-counter {
       text-align: right;
       font-size: 0.85rem;
       opacity: 0.7;
       margin-top: 5px;
     }
-    
+
     /* Mostrar/ocultar hints según dispositivo */
     .mobile-hint {
       display: none;
     }
-    
+
     @media (max-width: 768px) {
       .desktop-hint {
         display: none;
       }
-      
+
       .mobile-hint {
         display: block;
       }
     }
-    
+
     /* Canvas container */
     #canvas-container {
       touch-action: none;
       -webkit-user-select: none;
       user-select: none;
     }
-    
+
     /* Botones de Zoom */
     .zoom-controls {
       position: absolute;
@@ -265,7 +271,7 @@
       z-index: 10;
       pointer-events: auto;
     }
-    
+
     .zoom-btn {
       width: 45px;
       height: 45px;
@@ -283,14 +289,14 @@
       touch-action: auto;
       -webkit-tap-highlight-color: transparent;
     }
-    
+
     .zoom-btn:hover {
       background: #9b59b6;
       color: white;
       transform: scale(1.1);
       box-shadow: 0 6px 16px rgba(155, 89, 182, 0.5);
     }
-    
+
     .zoom-btn:active {
       transform: scale(0.95);
       background: #9b59b6;
@@ -298,6 +304,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Navbar Container -->
   <div id="navbar-container"></div>
@@ -316,42 +323,31 @@
       <div class="messages-column">
         <!-- Formulario de Mensaje -->
         <div class="glass p-6">
-      <h2 class="text-2xl font-bold mb-5" style="color: #9b59b6;">✍️ Escribe tu mensaje</h2>
-      
-      <form id="message-form" onsubmit="submitMessage(event)">
-        <div class="form-group">
-          <label class="form-label">Tu nombre *</label>
-          <input 
-            type="text" 
-            id="author-name" 
-            class="form-input" 
-            placeholder="Ej: Mariana Sánchez"
-            required
-            maxlength="50"
-          >
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Tu mensaje para Sara *</label>
-          <textarea 
-            id="message-content" 
-            class="form-textarea" 
-            placeholder="Escribe aquí tus mejores deseos para Sara en este día tan especial..."
-            required
-            maxlength="300"
-            oninput="updateCharCounter()"
-          ></textarea>
-          <div class="char-counter">
-            <span id="char-count">0</span> / 300 caracteres
-          </div>
-        </div>
-        
-        <div class="text-center">
-          <button type="submit" class="btn-primary">
-            💌 Enviar mensaje
-          </button>
-        </div>
-      </form>
+          <h2 class="text-2xl font-bold mb-5" style="color: #9b59b6;">✍️ Escribe tu mensaje</h2>
+
+          <form id="message-form" onsubmit="submitMessage(event)">
+            <div class="form-group">
+              <label class="form-label">Tu nombre *</label>
+              <input type="text" id="author-name" class="form-input" placeholder="Ej: Mariana Sánchez" required
+                maxlength="50">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tu mensaje para Sara *</label>
+              <textarea id="message-content" class="form-textarea"
+                placeholder="Escribe aquí tus mejores deseos para Sara en este día tan especial..." required
+                maxlength="300" oninput="updateCharCounter()"></textarea>
+              <div class="char-counter">
+                <span id="char-count">0</span> / 300 caracteres
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button type="submit" class="btn-primary">
+                💌 Enviar mensaje
+              </button>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -359,21 +355,23 @@
       <div class="messages-column">
         <!-- Muro de Mensajes 3D -->
         <div class="glass p-6">
-        <h2 class="text-2xl font-bold mb-4 text-center" style="color: #9b59b6;">💟 Tablero de notas</h2>
-        <p class="text-center mb-3 opacity-90 text-sm desktop-hint">🖱️ Arrastra para mover el tablero <br> ↕ Scrollea para ajustar el zoom</p>
-        <p class="text-center mb-3 opacity-90 text-sm mobile-hint">💠 Arrastra para mover el tablero <br> 🤏🏽 Pellizca para ajustar el zoom</p>
-      
-        <!-- Canvas 3D -->
-        <div id="canvas-container" style="position: relative;">
-          <canvas id="messages-canvas"></canvas>
-          
-          <!-- Botones de Zoom -->
-          <div class="zoom-controls">
-            <button id="fullscreen-btn" class="zoom-btn" title="Pantalla Completa">⛶</button>
-            <button id="zoom-in-btn" class="zoom-btn" title="Acercar">➕</button>
-            <button id="zoom-out-btn" class="zoom-btn" title="Alejar">➖</button>
+          <h2 class="text-2xl font-bold mb-4 text-center" style="color: #9b59b6;">💟 Tablero de notas</h2>
+          <p class="text-center mb-3 opacity-90 text-sm desktop-hint">🖱️ Arrastra para mover el tablero <br> ↕ Scrollea
+            para ajustar el zoom</p>
+          <p class="text-center mb-3 opacity-90 text-sm mobile-hint">💠 Arrastra para mover el tablero <br> 🤏🏽
+            Pellizca para ajustar el zoom</p>
+
+          <!-- Canvas 3D -->
+          <div id="canvas-container" style="position: relative;">
+            <canvas id="messages-canvas"></canvas>
+
+            <!-- Botones de Zoom -->
+            <div class="zoom-controls">
+              <button id="fullscreen-btn" class="zoom-btn" title="Pantalla Completa">⛶</button>
+              <button id="zoom-in-btn" class="zoom-btn" title="Acercar">➕</button>
+              <button id="zoom-out-btn" class="zoom-btn" title="Alejar">➖</button>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
@@ -392,11 +390,11 @@
     // Inicializar todo en el orden correcto
     document.addEventListener('DOMContentLoaded', async () => {
       console.log('🚀 Iniciando carga de mensajes...');
-      
+
       // 1. Cargar mensajes primero
       await initMessages();
       console.log('✅ Mensajes cargados:', messages.length);
-      
+
       // 2. Inicializar escena 3D
       try {
         init3DScene();
@@ -404,7 +402,7 @@
       } catch (error) {
         console.error('❌ Error inicializando escena 3D:', error);
       }
-      
+
       // 3. Esperar un poco más para asegurar que todo esté listo
       setTimeout(() => {
         console.log('🎨 Intentando mostrar mensajes...');
@@ -413,11 +411,12 @@
           console.log('✅ Mensajes mostrados en el tablero');
         }
       }, 500);
-      
+
       // 4. Iniciar auto-refresh
       startMessagesSystem();
       console.log('🔄 Sistema de auto-refresh iniciado');
     });
   </script>
 </body>
+
 </html>

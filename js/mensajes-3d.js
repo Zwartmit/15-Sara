@@ -262,7 +262,7 @@ function createPostit3D(message, index, total) {
 
   // Reducir tamaño de fuente iterativamente si no cabe
   while (!fits && contentFontSize >= 45) {
-    ctx.font = `${contentFontSize}px "Indie Flower", cursive`;
+    ctx.font = `${contentFontSize}px "Poppins", sans-serif`;
     lineHeight = contentFontSize * 1.0; // Un poco más de espaciado
     contentLines = getWrappedLines(ctx, message.content, maxWidth);
 
@@ -276,7 +276,7 @@ function createPostit3D(message, index, total) {
   }
 
   // Renderizar contenido
-  ctx.font = `${contentFontSize}px "Indie Flower", cursive`;
+  ctx.font = `${contentFontSize}px "Poppins", sans-serif`;
 
   contentLines.forEach(line => {
     // Verificar límite inferior por seguridad
