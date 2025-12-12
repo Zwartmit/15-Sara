@@ -54,12 +54,22 @@ function initCountdown() {
   const progressMinutes = document.getElementById('progress-minutes');
   const progressSeconds = document.getElementById('progress-seconds');
 
+  let countdownInterval;
+
   function updateCountdown() {
     const now = new Date().getTime();
     const distance = eventDate - now;
 
     if (distance < 0) {
-      countdownElement.innerHTML = '<div class="countdown-item"><span class="countdown-number">¡HOY!</span><span class="countdown-label">Es el gran día</span></div>';
+      if (countdownInterval) clearInterval(countdownInterval);
+      countdownElement.innerHTML = `
+        <div class="video-container fade-in" style="width: 100%; max-width: 800px; margin: 0 auto;">
+          <video controls autoplay style="width: 100%; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <source src="assets/images/video-sara-15.mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+          </video>
+        </div>
+      `;
       return;
     }
 
@@ -96,7 +106,7 @@ function initCountdown() {
   }
 
   updateCountdown();
-  setInterval(updateCountdown, 1000);
+  countdownInterval = setInterval(updateCountdown, 1000);
 }
 
 // Toggle mobile menu
