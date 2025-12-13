@@ -63,11 +63,14 @@ function initCountdown() {
     if (distance < 0) {
       if (countdownInterval) clearInterval(countdownInterval);
       countdownElement.innerHTML = `
-        <div class="video-container fade-in" style="width: 100%; max-width: 800px; margin: 0 auto;">
-          <video controls autoplay style="width: 100%; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-            <source src="assets/images/video-sara-15.mp4" type="video/mp4">
-            Tu navegador no soporta el elemento de video.
-          </video>
+        <div class="video-container fade-in" style="width: 100%; max-width: 800px; margin: 0 auto; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+          <iframe 
+            src="https://www.youtube.com/embed/okzHbIw5_bA?autoplay=1" 
+            title="Video 15 Años Sara"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
         </div>
       `;
       return;
