@@ -7,7 +7,22 @@ function initCountdown() {
   const countdownElement = document.getElementById('countdown');
   if (!countdownElement) return;
 
-  const eventDate = new Date(CONFIG.evento.fecha + ' ' + CONFIG.evento.hora).getTime();
+  // Parse date and time for Safari/iOS compatibility
+  const [year, month, day] = CONFIG.evento.fecha.split('-').map(Number);
+  const timeStr = CONFIG.evento.hora.toLowerCase();
+  const [time, period] = timeStr.split(' ');
+  const [hours, minutes] = time.split(':').map(Number);
+
+  // Convert to 24-hour format
+  let hour24 = hours;
+  if (period === 'pm' && hours !== 12) {
+    hour24 = hours + 12;
+  } else if (period === 'am' && hours === 12) {
+    hour24 = 0;
+  }
+
+  // Create date object (month is 0-indexed in JavaScript)
+  const eventDate = new Date(year, month - 1, day, hour24, minutes || 0).getTime();
 
   // Crear estructura HTML del reloj circular
   countdownElement.innerHTML = `

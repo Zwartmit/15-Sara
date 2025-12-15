@@ -272,10 +272,12 @@ function openInMaps(app) {
   }
 }
 
-// Formatear fecha
+// Formatear fecha (Safari-compatible)
 function formatDate(dateString) {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString + 'T12:00:00').toLocaleDateString('es-ES', options);
+  // Ensure ISO format for Safari: YYYY-MM-DDTHH:MM:SS
+  const isoDate = dateString.includes('T') ? dateString : `${dateString}T12:00:00`;
+  return new Date(isoDate).toLocaleDateString('es-ES', options);
 }
 
 // Función callback para Google Maps (se llama automáticamente cuando la API está lista)
